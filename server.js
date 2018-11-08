@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/api", expressJwt({ secret: process.env.SECRET }));
 
 mongoose.set("useCreateIndex", true);
-mongoose.connect(prcess.env.MONGODB_URI, { useNewUrlParser: true }, () => console.log("Connected to MongoDB"));
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, () => console.log("Connected to MongoDB"));
 
 app.use("/auth", require("./routes/auth"));
 app.use("/api/chores", require("./routes/chore"));
