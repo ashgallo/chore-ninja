@@ -9,7 +9,7 @@ const choreSchema = new Schema({
         enum: ["kitchen", "pets", "bathroom", "bedroom", "livingroom", "yard", "laundry", "other"]
     },
     name: {
-        type: string, 
+        type: String, 
         required: true
     },
     startedAt: Date,

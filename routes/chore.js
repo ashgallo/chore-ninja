@@ -1,6 +1,6 @@
 const express = require("express");
 const { Router } = express;
-const Chore = require("../models/chord");
+const Chore = require("../models/chore");
 const choreRouter = Router();
 
 choreRouter.route("/")
