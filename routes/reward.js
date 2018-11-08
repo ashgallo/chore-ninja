@@ -22,7 +22,7 @@ rewardRouter.route("/")
 // Get, put, and delete specific rewards
 rewardRouter.route("/:id")
     .get((req, res, next) => {
-        Reward.findById(req.params.id)
+        Reward.findOne(req.params.id)
             .then(reward => res.status(200).send(reward))
             .catch(err => next(err))
     })
