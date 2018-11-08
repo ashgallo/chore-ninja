@@ -25,7 +25,7 @@ authRouter.post("/signup", (req, res, next) => {
 });
 
 authRouter.post("/login", (req, res, next) => {
-  User.findOne({ username: req.body.username.withoutPassword() }, (err, user) => {
+  User.findOne({ username: req.body.username.toLowerCase() }, (err, user) => {
     if (err) {
       res.status(500);
       return next(err);
@@ -35,7 +35,7 @@ authRouter.post("/login", (req, res, next) => {
     }
     user.checkPassword(req.body.password, (err, isMatch) => {
       if (err) return res.status(500).send(err);
-      if(!isMatch) res.status(401).send({ reason: "Invalid passsword" });
+      if(!isMatch) return res.status(401).send({ reason: "Invalid passsword" });
       const token = jwt.sign(user.withoutPassword(), process.env.SECRET);
       return res.send({ user: user.withoutPassword(), token })
     });
