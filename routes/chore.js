@@ -1,26 +1,30 @@
 const express = require("express");
-const { Router } = express;
 const Chore = require("../models/chore");
+
+const { Router } = express;
 const choreRouter = Router();
 
 choreRouter.get('/',
   function (req, res, next) {
-    if (req.user.role === 'parent') {
-      //handle your parent stuff here
+    // Parent - Get chores by user id
+    if (req.user.role === "parent") {
       Chore.find({ user: req.user._id })
         .then(chores => res.status(200).send(chores))
         .catch(err => next(err))
-    } else {
+    } 
+    // If not a parent, move on to next function
+    else {
       next();
     }
   },
   function (req, res, next) {
-    //handle your child stuff here
+    // Child - Get chores by assignedTo
     Chore.find({ assignedTo: req.user._id })
       .then(chores => res.status(200).send(chores))
       .catch(err => next(err))
   })
 
+// Post a new chore
 choreRouter.post("/", (req, res, next) => {
   const newChore = new Chore(req.body);
   newChore.createdBy = req.user._id;
@@ -29,19 +33,21 @@ choreRouter.post("/", (req, res, next) => {
     .catch(err => next(err))
 })
 
-choreRouter.route("/parent/:id")
+
+// Get, edit and delete a specific chore
+choreRouter.route(":id")
   .get((req, res, next) => {
-    Chore.findOne({ _id: req.user._id })
+    Chore.findOne({ _id: req.params._id })
       .then(foundChore => res.status(200).send(foundChore))
       .catch(err => next(err))
   })
   .put((req, res, next) => {
-    Chore.findOne({ _id: req.id }, req.body, { new: true })
+    Chore.findOneAndUpdate({ _id: req.params._id }, req.body, { new: true })
       .then(editedChore => res.status(200).send(editedChore))
       .catch(err => next(err))
   })
   .delete((req, res, next) => {
-    Chore.findOneAndDelete({ _id: req.id })
+    Chore.findByIdAndDelete(req.params._id)
       .then(() => res.status(204).send())
       .catch(err => next(err))
   })
