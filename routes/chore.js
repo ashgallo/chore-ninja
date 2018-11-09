@@ -6,9 +6,9 @@ const choreRouter = Router();
 
 choreRouter.get('/',
   function (req, res, next) {
-    // Parent - Get chores by user id
+    // Parent - Get chores by createdBy
     if (req.user.role === "parent") {
-      Chore.find({ user: req.user._id })
+      Chore.find({ createdBy: req.user._id })
         .then(chores => res.status(200).send(chores))
         .catch(err => next(err))
     } 
@@ -35,7 +35,7 @@ choreRouter.post("/", (req, res, next) => {
 
 
 // Get, edit and delete a specific chore
-choreRouter.route(":id")
+choreRouter.route("/:id")
   .get((req, res, next) => {
     Chore.findOne({ _id: req.params._id })
       .then(foundChore => res.status(200).send(foundChore))
@@ -47,7 +47,7 @@ choreRouter.route(":id")
       .catch(err => next(err))
   })
   .delete((req, res, next) => {
-    Chore.findByIdAndDelete(req.params._id)
+    Chore.findOneAndDelete({ _id: req.params._id})
       .then(() => res.status(204).send())
       .catch(err => next(err))
   })
