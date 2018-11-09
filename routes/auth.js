@@ -66,7 +66,7 @@ authRouter.put("/:id/addParent", expressJwt({ secret: process.env.SECRET }), (re
 
 // Parent - Get list of kids assigned to them
 authRouter.get("/", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
-  User.find({ kids: req.user._id })
+  User.find({ parents: req.user._id })
     .then(kids => res.status(200).send(kids))
     .catch(err => next(err))
 });
