@@ -13,14 +13,20 @@ const choreSchema = new Schema({
         required: true
     },
     startedAt: Date,
-    completed: Boolean,
+    completed: {
+        type: Boolean,
+        default: false
+    },
     assignedTo: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
     submittedAt: Date,
-    submitted: Boolean,
+    submitted: {
+        type: Boolean,
+        default: false
+    },
     points: {
         type: Number,
         required: true
