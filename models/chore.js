@@ -29,7 +29,8 @@ const choreSchema = new Schema({
     },
     points: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     createdBy: {
         type: Schema.Types.ObjectId,
