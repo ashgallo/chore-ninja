@@ -1,11 +1,12 @@
 const express = require("express");
-const { Router } = express;
 const Chore = require("../models/chore");
+
+const { Router } = express;
 const choreRouter = Router();
 
 choreRouter.get('/',
   function (req, res, next) {
-    if (req.user.role === 'parent') {
+    if (req.user.role === "parent") {
       //handle your parent stuff here
       Chore.find({ user: req.user._id })
         .then(chores => res.status(200).send(chores))
@@ -29,19 +30,19 @@ choreRouter.post("/", (req, res, next) => {
     .catch(err => next(err))
 })
 
-choreRouter.route("/parent/:id")
+choreRouter.route(":id")
   .get((req, res, next) => {
     Chore.findOne({ _id: req.user._id })
       .then(foundChore => res.status(200).send(foundChore))
       .catch(err => next(err))
   })
   .put((req, res, next) => {
-    Chore.findOne({ _id: req.id }, req.body, { new: true })
+    Chore.findOne({ _id: req.user.id }, req.body, { new: true })
       .then(editedChore => res.status(200).send(editedChore))
       .catch(err => next(err))
   })
   .delete((req, res, next) => {
-    Chore.findOneAndDelete({ _id: req.id })
+    Chore.findByIdAndDelete(req.params._id)
       .then(() => res.status(204).send())
       .catch(err => next(err))
   })
