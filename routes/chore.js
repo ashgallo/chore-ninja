@@ -37,17 +37,17 @@ choreRouter.post("/", (req, res, next) => {
 // Get, edit and delete a specific chore
 choreRouter.route("/:id")
   .get((req, res, next) => {
-    Chore.findOne({ _id: req.params._id })
+    Chore.findOne({ _id: req.params.id })
       .then(foundChore => res.status(200).send(foundChore))
       .catch(err => next(err))
   })
   .put((req, res, next) => {
-    Chore.findOneAndUpdate({ _id: req.params._id }, req.body, { new: true })
+    Chore.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
       .then(editedChore => res.status(200).send(editedChore))
       .catch(err => next(err))
   })
   .delete((req, res, next) => {
-    Chore.findOneAndDelete({ _id: req.params._id})
+    Chore.findOneAndDelete({ _id: req.params.id})
       .then(() => res.status(204).send())
       .catch(err => next(err))
   })
