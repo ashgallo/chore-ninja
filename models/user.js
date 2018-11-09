@@ -29,6 +29,10 @@ const userSchema = new Schema({
     earnedRewards:[{
         type: Schema.Types.ObjectId,
         ref: "Reward"
+    }],
+    redeemedRewards: [{
+        type: Schema.Types.ObjectId,
+        ref: "Reward"
     }]
 });
 
