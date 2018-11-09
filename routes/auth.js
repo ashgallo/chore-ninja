@@ -60,7 +60,7 @@ authRouter.delete("/:id/deleteKid", expressJwt({ secret: process.env.SECRET }), 
 // Child - Add/connect to parent 
 authRouter.put("/:id/addParent", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
   User.findOneAndUpdate({ _id: req.params.id}, req.body, { new: true })
-    .then(editedKid => res.status(204).send(editedKid))
+    .then(editedKid => res.status(200).send(editedKid))
     .catch(err => next(err))
 })
 
