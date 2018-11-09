@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const authRouter = express.Router();
 const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
 
 authRouter.post("/signup", (req, res, next) => {
   User.findOne({ username: req.body.username }, (err, existingUser) => {
@@ -42,16 +43,25 @@ authRouter.post("/login", (req, res, next) => {
   });
 });
 
-authRouter.put("/:id/addKid", (req, res, next) => {
-  User.findOneAndUpdate(reg.params.id, req.body, { new: true })
+// Parent - Add a kid and assign
+authRouter.put("/:id/addKid", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
+  User.findOneAndUpdate(req.params.id, req.body, { new: true })
       .then(editedParent => res.status(200).send(editedParent))
       .catch(err => next(err))
-})
+});
 
-authRouter.delete("/:id/deleteKid", (req, res, next) => {
+// Parent - Delete a kid assigned to them
+authRouter.delete("/:id/deleteKid", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
   User.deleteOne(req.params.id)
       .then(() => res.status(204).send())
       .catch(err => next(err))
-})
+});
+
+// Parent - Get list of kids assigned to them
+authRouter.get("/", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
+  User.find({ kids: req.user._id })
+    .then(kids => res.status(200).send(kids))
+    .catch(err => next(err))
+});
 
 module.exports = authRouter;
