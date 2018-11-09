@@ -42,7 +42,7 @@ choreRouter.route(":id")
       .catch(err => next(err))
   })
   .put((req, res, next) => {
-    Chore.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    Chore.findOneAndUpdate({ _id: req.params._id }, req.body, { new: true })
       .then(editedChore => res.status(200).send(editedChore))
       .catch(err => next(err))
   })
