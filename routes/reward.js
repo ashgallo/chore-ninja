@@ -38,7 +38,7 @@ rewardRouter.route("/:id")
             .catch(err => next(err))
     })
     .put((req, res, next) => {
-        Reward.findOneAndUpdate({ _id: req.id}, req.body, { new: true })
+        Reward.findOneAndUpdate({ _id: req.params.id}, req.body, { new: true })
             .then(editedReward => res.status(200).send(editedReward))
             .catch(err => next(err))
     })
