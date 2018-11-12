@@ -1,4 +1,5 @@
 import React from 'react';
+import "./assets/css/styles.css";
 
 import LoginPage from "./LoginPage";
 

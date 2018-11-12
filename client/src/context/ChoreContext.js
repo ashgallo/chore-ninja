@@ -4,7 +4,6 @@ import axios from "axios";
 const choreAxios = axios.create();
 const choreUrl = "/api/chores"
 
-// TODO: Need this for chore context? Or only auth context
 choreAxios.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
@@ -23,12 +22,6 @@ export default class ChoreContext extends Component {
         }
     };
 
-    componentDidMount(){
-
-        //TODO: Do we need this since we only get chores once they are logged in?
-        // this.getChores();
-    };
-
     getChores = () => {
         return choreAxios.get(choreUrl)
             .then(response => {
@@ -36,6 +29,7 @@ export default class ChoreContext extends Component {
                 return response;
             })
     };
+    // TODO: Add callback function to params so that a clear inputs function can be called later
     addChore = (newChore) => {
         return choreAxios.post(choreUrl, newChore)
             .then(response => {

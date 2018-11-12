@@ -1,12 +1,12 @@
 import React from "react";
 
-import Button from "@material-ui/core/Button";
-
 import { withUserContext } from "./context/UserContext";
 import FormContainer from './FormContainer';
 import LoginForm from './LoginForm';
 
 import ninjaHome from "./assets/img/ninjaHome.png";
+
+import Button from "@material-ui/core/Button";
 
 const styles = {
     page: {

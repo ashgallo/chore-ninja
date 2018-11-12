@@ -30,9 +30,9 @@ const styles = {
     }
 }
 
-function LoginForm({ handleSubmit, handleChange, inputs }) {
+function LoginForm({ handleSubmit, clearInputs, handleChange, inputs }) {
     return (
-        <form onSubmit={handleSubmit(inputs)} className="login-form" style={styles.form}>
+        <form onSubmit={handleSubmit(inputs, clearInputs)} className="login-form" style={styles.form}>
             <label style={styles.label}>Username</label>
             <input onChange={handleChange} name="username" value={inputs.username} type="text" style={styles.input}/>
 

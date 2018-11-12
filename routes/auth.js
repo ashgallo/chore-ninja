@@ -9,7 +9,7 @@ authRouter.post("/signup", (req, res, next) => {
     if (err) {
       res.status(500);
       return next(err);
-    } else if(existingUser !== null ) {
+    } else if (existingUser !== null) {
       res.status(400);
       return next(new Error("Username already exists"));
     }
@@ -20,7 +20,7 @@ authRouter.post("/signup", (req, res, next) => {
         return next(err);
       }
       const token = jwt.sign(user.withoutPassword(), process.env.SECRET);
-        return res.status(201).send({ user: user.withoutPassword(), token });
+      return res.status(201).send({ user: user.withoutPassword(), token });
     });
   });
 });
@@ -36,30 +36,36 @@ authRouter.post("/login", (req, res, next) => {
     }
     user.checkPassword(req.body.password, (err, isMatch) => {
       if (err) return res.status(500).send(err);
-      if(!isMatch) return res.status(401).send({ reason: "Invalid passsword" });
+      if (!isMatch) return res.status(401).send({ reason: "Invalid passsword" });
       const token = jwt.sign(user.withoutPassword(), process.env.SECRET);
       return res.send({ user: user.withoutPassword(), token })
     });
   });
 });
 
+authRouter.get("/verify", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
+  User.findById(req.user._id)
+    .then(user => res.status(200).send(user))
+    .catch(err => next(err));
+})
+
 // Parent - Add a kid and assign
 authRouter.put("/:id/addKid", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
-  User.findOneAndUpdate({_id: req.params.id }, req.body, { new: true })
-      .then(editedParent => res.status(200).send(editedParent))
-      .catch(err => next(err))
+  User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    .then(editedParent => res.status(200).send(editedParent))
+    .catch(err => next(err))
 });
 
 // Parent - Delete a kid assigned to them
 authRouter.delete("/:id/deleteKid", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
   User.deleteOne({ _id: req.params.id })
-      .then(() => res.status(204).send())
-      .catch(err => next(err))
+    .then(() => res.status(204).send())
+    .catch(err => next(err))
 });
 
 // Child - Add/connect to parent 
 authRouter.put("/:id/addParent", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
-  User.findOneAndUpdate({ _id: req.params.id}, req.body, { new: true })
+  User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
     .then(editedKid => res.status(200).send(editedKid))
     .catch(err => next(err))
 })
@@ -82,7 +88,7 @@ authRouter.put("/:id/redeemReward", expressJwt({ secret: process.env.SECRET }), 
 authRouter.put("/:id/earnedReward", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
   User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
     .then(editedParent => res.status(200).send(editedParent))
-    .catch(err => next (err))
+    .catch(err => next(err))
 })
 
 module.exports = authRouter;
