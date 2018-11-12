@@ -12,7 +12,7 @@ userAxios.interceptors.request.use((config) => {
 const UserData = createContext();
 
 export default class UserContext extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             user: JSON.parse(localStorage.getItem("user")) || {},
@@ -20,12 +20,16 @@ export default class UserContext extends Component {
         }
     }
 
-    componentDidMount(){
-        // TODO: get chores and rewards here?? getChores and getRewards are not local
+    // TODO: Finish getting chore and reward context 
+    componentDidMount() {
+        userAxios.get("/auth/verify")
+            .then(/* get chores */)
+            .then(/* get rewards */)
     }
 
     signup = (userInfo) => {
-        return userAxios.post("auth/signup", userInfo)
+        return e => {
+            axios.post("/auth/signup", userInfo)
             .then(response => {
                 const { user, token } = response.data
                 localStorage.setItem("token", token)
@@ -36,28 +40,36 @@ export default class UserContext extends Component {
                 });
                 return response;
             });
+        }   
     };
-    login = (credentials) => {
-        return userAxios.post("auth/login", credentials)
-            .then(response => {
-                const { token, user } = response.data;
-                localStorage.setItem("token", token)
-                localStorage.setItem("user", JSON.stringify(user))
-                this.setState({
-                    user,
-                    token
-                });
-                //TODO: Get chores and rewards here?? getChores and getRewards are not local
-                return response;
-            });
+    // TODO: Finish getting chore and reward context
+    login = (credentials, cb) => {
+        return e => {
+            e.preventDefault();
+            axios.post("/auth/login", credentials)
+                .then(response => {
+                    const { token, user } = response.data;
+                    localStorage.setItem("token", token)
+                    localStorage.setItem("user", JSON.stringify(user))
+                    this.setState({
+                        user,
+                        token
+                    }, cb);
+                    return response;
+                })
+            // .then(/* getChores */)
+            // .then(/* getRewards */)
+        }
     };
     logout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        this.setState({
-            user: {},
-            token: ""
-        });
+        return e => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            this.setState({
+                user: {},
+                token: ""
+            });
+        }
     };
 
     render() {

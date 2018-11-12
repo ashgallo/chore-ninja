@@ -23,10 +23,6 @@ export class rewardProvider extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getRewards()
-  }
-
   getRewards = () => {
     return rewardAxios.get("/api/todo")
       .then(response => {
@@ -34,7 +30,7 @@ export class rewardProvider extends Component {
         return response;
       })
   }
-
+  // TODO: Add callback function to params so that a clear inputs function can be called later
   addReward = (newReward) => {
     return rewardAxios.post("/api/todo/", newReward)
       .then(response => {
