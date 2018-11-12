@@ -23,7 +23,8 @@ const styles = {
         outlineColor: "#0F52BA"
     },
     loginButton: {
-        backgroundColor: "#0F52BA",
+        backgroundColor: "#0072a3",
+        color: "#f2f2f2",
         width: "100px",
         height: "20px",
         alignSelf: "center"

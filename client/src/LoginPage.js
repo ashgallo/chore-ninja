@@ -20,7 +20,8 @@ const styles = {
         fontSize: "3em"
     },
     Button: {
-        backgroundColor: "#FF8900",
+        backgroundColor: "#EB3460",
+        color: "#f2f2f2",
         width: "100px",
         height: "20px"
     },
