@@ -10,7 +10,7 @@ choreAxios.interceptors.request.use((config) => {
     return config;
 });
 
-const ChoreContext = createContext();
+const ChoreData = createContext();
 
 export default class ChoreContext extends Component {
     constructor(){
@@ -29,22 +29,21 @@ export default class ChoreContext extends Component {
                 return response;
             })
     };
-    // TODO: Add callback function to params so that a clear inputs function can be called later
-    addChore = (newChore) => {
+    addChore = (newChore, cb) => {
         return choreAxios.post(choreUrl, newChore)
             .then(response => {
                 this.setState(prevState => {
                     return { chores: [...prevState.chores, response.data] }
                 });
                 return response;
-            });
+            }, cb);
     };
     editChore = (choreId, editedChore) => {
         return choreAxios.put(`${choreUrl}/${choreId}`, editedChore)
             .then(response => {
                 this.setState(prevState => {
                     const updatedChores = prevState.chores.map(chore => {
-                        chore._id === choreId ? response.data : chore
+                        return chore._id === choreId ? response.data : chore
                     });
                     return { chores: updatedChores }
                 });
@@ -56,7 +55,7 @@ export default class ChoreContext extends Component {
             .then(response => {
                 this.setState(prevState => {
                     const updatedChores = prevState.chores.filter(chore => {
-                        chore._id !== choreId
+                        return chore._id !== choreId
                     });
                     return { chores: updatedChores }
                 });
@@ -73,15 +72,15 @@ export default class ChoreContext extends Component {
             deleteChore: this.deleteChore
         }
         return (
-            <ChoreContext.Provider value={props}>
+            <ChoreData.Provider value={props}>
                 {this.props.children}
-            </ChoreContext.Provider>
+            </ChoreData.Provider>
         )
     }
 };
 
 export const withChoreContext = C => props => (
-    <ChoreContext.Consumer>
+    <ChoreData.Consumer>
         {value => <C {...value} {...props} />}
-    </ChoreContext.Consumer>
+    </ChoreData.Consumer>
 );

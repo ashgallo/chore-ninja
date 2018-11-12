@@ -10,7 +10,6 @@ export default class FormContainer extends Component {
         this.setState({ [name]: value })
     };
 
-    // TODO: Test clear inputs with for in loop
     clearInputs = () => {
         this.setState(prevState => {
             let newState = {}

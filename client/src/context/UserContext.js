@@ -1,6 +1,9 @@
 import React, { Component, createContext } from "react";
-import axios from "axios";
 
+import { withChoreContext } from "../context/ChoreContext";
+import { withRewardContext } from "../context/RewardContext";
+
+import axios from "axios";
 const userAxios = axios.create();
 
 userAxios.interceptors.request.use((config) => {
@@ -11,7 +14,7 @@ userAxios.interceptors.request.use((config) => {
 
 const UserData = createContext();
 
-export default class UserContext extends Component {
+class UserContext extends Component {
     constructor() {
         super();
         this.state = {
@@ -20,11 +23,10 @@ export default class UserContext extends Component {
         }
     }
 
-    // TODO: Finish getting chore and reward context 
     componentDidMount() {
         userAxios.get("/auth/verify")
-            .then(/* get chores */)
-            .then(/* get rewards */)
+            .then(this.props.getChores())
+            .then(this.props.getRewards())
     }
 
     signup = (userInfo) => {
@@ -42,7 +44,6 @@ export default class UserContext extends Component {
             });
         }   
     };
-    // TODO: Finish getting chore and reward context
     login = (credentials, cb) => {
         return e => {
             e.preventDefault();
@@ -57,8 +58,8 @@ export default class UserContext extends Component {
                     }, cb);
                     return response;
                 })
-            // .then(/* getChores */)
-            // .then(/* getRewards */)
+                .then(this.props.getChores())
+                .then(this.props.getRewards())
         }
     };
     logout = () => {
@@ -86,6 +87,8 @@ export default class UserContext extends Component {
         )
     };
 };
+
+export default withChoreContext(withRewardContext(UserContext));
 
 export const withUserContext = C => props => (
     <UserData.Consumer>
