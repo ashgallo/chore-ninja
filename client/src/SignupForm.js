@@ -12,6 +12,13 @@ const styles = {
     label: {
         color: "#606060"
     },
+    radioContainerLabel: {
+        alignSelf: "center",
+        color: "#606060"
+    },
+    radioLabel: {
+        margin: "10px"
+    },
     input: {
         border: "none",
         borderBottom: " 2px solid #282828",
@@ -19,13 +26,22 @@ const styles = {
         marginBottom: "40px",
         width: "100%",
         fontSize: "1em",
+        backgroundColor: "#5ECFA1",
         outlineColor: "#0F52BA"
     },
     signupButton: {
         backgroundColor: "#0F52BA",
         width: "100px",
         height: "20px",
-        alignSelf: "center"
+        alignSelf: "center",
+        marginTop: "10px",
+        zIndex: "100"
+    },
+    radioContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        color: "#606060"
     }
 }
 
@@ -38,16 +54,17 @@ function SignupForm({ handleSubmit, handleChange, inputs }) {
             <label style={styles.label}>New Password</label>
             <input onChange={handleChange} name="password" value={inputs.password} type="password" style={styles.input}/>
 
-            <label style={styles.label}>Signing up as a...</label>
-            <label style={styles.label}>
-                <input onChange={handleChange} name="role" value={inputs.usertype} type="radio"/>
-                Parent
-            </label>
-            <label style={styles.label}>
-                <input onChange={handleChange} name="role" value={inputs.usertype} type="radio"/>
-                Child
-            </label>
-
+            <label style={styles.radioContainerLabel}>Signing up as a...</label>
+            <div style={styles.radioContainer}>
+                <label style={styles.radioLabel}>
+                    <input onChange={handleChange} name="role" value={inputs.usertype} type="radio" />
+                    Parent
+                </label>
+                <label style={styles.radioLabel}>
+                    <input onChange={handleChange} name="role" value={inputs.usertype} type="radio"/>
+                    Child
+                </label>
+            </div>
             <Button type="submit" variant="contained" style={styles.signupButton}>SIGN UP!</Button>
         </form>
     )
