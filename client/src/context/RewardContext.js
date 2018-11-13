@@ -1,65 +1,56 @@
-import React, { Conponent, createContext } from 'react';
+import React, { Component, createContext } from 'react';
 import axios from 'axios';
 
 const rewardAxios = axios.create();
 
 rewardAxios.interceptors.request.use((config) => {
-  const token = localStorage.getReward('token');
+  const token = localStorage.getItem('token');
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 })
 
-const RewardContext = React.createContext();
+const RewardData = createContext();
 
-export class rewardProvider extends Component {
+export default class RewardProvider extends Component {
   constructor() {
     super()
     this.state = {
       loading: true,
       err: null,
-      rewards: [],
-      user: JSON.parse(localStorage.getReward("user")) || {},
-      token: localStorage.getReward("token") || ""
+      rewards: []
     }
   }
 
-  componentDidMount() {
-    this.getRewards()
-  }
-
   getRewards = () => {
-    return rewardAxios.get("/api/todo")
+    return rewardAxios.get("/api/rewards")
       .then(response => {
         this.setState({ rewards: response.data });
         return response;
       })
-  }
-
-  addReward = (newReward) => {
-    return rewardAxios.post("/api/todo/", newReward)
+  };
+  addReward = (newReward, cb) => {
+    return rewardAxios.post("/api/rewards", newReward)
       .then(response => {
         this.setState(prevState => {
           return { rewards: [...prevState.rewards, response.data] }
         });
         return response;
-      })
-  }
-
+      }, cb)
+  };
   editReward = (rewardId, reward) => {
-    return rewardAxios.put(`/api/reward/${rewardId}`, reward)
+    return rewardAxios.put(`/api/rewards/${rewardId}`, reward)
       .then(response => {
         this.setState(prevState => {
           const updatedRewards = prevState.rewards.map(reward => {
-            return reward._id === response.data._id ? response.data : todo
+            return reward._id === response.data._id ? response.data : reward
           })
           return { rewards: updatedRewards }
         })
         return response;
       })
-  }
-
+  };
   deleteReward = (rewardId) => {
-    return rewardAxios.delete(`/api/reward/${rewardId}`)
+    return rewardAxios.delete(`/api/rewards/${rewardId}`)
       .then(response => {
         this.setState(prevState => {
           const updatedRewards = prevState.rewards.filter(reward => {
@@ -69,11 +60,11 @@ export class rewardProvider extends Component {
         })
         return response;
       })
-  }
+  };
 
   render() {
     return (
-      <RewardContext.Provider
+      <RewardData.Provider
         value = {{
           getRewards: this.getRewards,
           addReward: this.getReward,
@@ -83,13 +74,13 @@ export class rewardProvider extends Component {
         }}
       >
         {this.props.children}
-      </RewardContext.Provider>
+      </RewardData.Provider>
     )
   }
 }
 
-export const withContext = C => props (
-  <RewardContext.Consumer>
+export const withRewardContext = C => props => (
+  <RewardData.Consumer>
     {value => <C {...props} {...value} />}
-  </RewardContext.Consumer>
+  </RewardData.Consumer>
 )

@@ -4,14 +4,13 @@ import axios from "axios";
 const choreAxios = axios.create();
 const choreUrl = "/api/chores"
 
-// TODO: Need this for chore context? Or only auth context
 choreAxios.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
 
-const ChoreContext = createContext();
+const ChoreData = createContext();
 
 export default class ChoreContext extends Component {
     constructor(){
@@ -23,12 +22,6 @@ export default class ChoreContext extends Component {
         }
     };
 
-    componentDidMount(){
-
-        //TODO: Do we need this since we only get chores once they are logged in?
-        // this.getChores();
-    };
-
     getChores = () => {
         return choreAxios.get(choreUrl)
             .then(response => {
@@ -36,21 +29,21 @@ export default class ChoreContext extends Component {
                 return response;
             })
     };
-    addChore = (newChore) => {
+    addChore = (newChore, cb) => {
         return choreAxios.post(choreUrl, newChore)
             .then(response => {
                 this.setState(prevState => {
                     return { chores: [...prevState.chores, response.data] }
                 });
                 return response;
-            });
+            }, cb);
     };
     editChore = (choreId, editedChore) => {
         return choreAxios.put(`${choreUrl}/${choreId}`, editedChore)
             .then(response => {
                 this.setState(prevState => {
                     const updatedChores = prevState.chores.map(chore => {
-                        chore._id === choreId ? response.data : chore
+                        return chore._id === choreId ? response.data : chore
                     });
                     return { chores: updatedChores }
                 });
@@ -62,7 +55,7 @@ export default class ChoreContext extends Component {
             .then(response => {
                 this.setState(prevState => {
                     const updatedChores = prevState.chores.filter(chore => {
-                        chore._id !== choreId
+                        return chore._id !== choreId
                     });
                     return { chores: updatedChores }
                 });
@@ -79,15 +72,15 @@ export default class ChoreContext extends Component {
             deleteChore: this.deleteChore
         }
         return (
-            <ChoreContext.Provider value={props}>
+            <ChoreData.Provider value={props}>
                 {this.props.children}
-            </ChoreContext.Provider>
+            </ChoreData.Provider>
         )
     }
 };
 
 export const withChoreContext = C => props => (
-    <ChoreContext.Consumer>
+    <ChoreData.Consumer>
         {value => <C {...value} {...props} />}
-    </ChoreContext.Consumer>
+    </ChoreData.Consumer>
 );
