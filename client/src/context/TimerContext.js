@@ -1,12 +1,12 @@
 import React, { Component, createContext } from "react";
 
-// import TimerView from './TimerView';
+import { withChoreContext } from "./ChoreContext";
 
 const TimerData = createContext();
 
-export default class TimerContext extends Component {
-    constructor(){
-        super();
+class TimerContext extends Component {
+    constructor(props){
+        super(props);
         this.state = {
             isRunning: false,
             timeElapsed: 0
@@ -57,17 +57,10 @@ export default class TimerContext extends Component {
     }
 }
 
+export default withChoreContext(TimerContext);
+
 export const withTimerContext = C => props => (
     <TimerData.Consumer>
         {value => <C {...value} {...props} />}
     </TimerData.Consumer>
 )
-
-// render() {
-//     const { isRunning, timeElapsed } = this.state;
-//     return (
-//         <div>
-//             <TimerView timeElapsed={timeElapsed} isRunning={isRunning} toggle={this.toggle} reset={this.reset}/>
-//         </div>
-//     )
-// }
