@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 
@@ -11,6 +11,9 @@ const choreSchema = new Schema({
     name: {
         type: String, 
         required: true
+    },
+    description: {
+        type: String,
     },
     startedAt: Date,
     completed: {
@@ -36,6 +39,9 @@ const choreSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
+    },
+    image: {
+        filename: String,
     }
 });
 

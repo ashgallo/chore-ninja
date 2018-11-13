@@ -18,6 +18,9 @@ const rewardSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
+    },
+    image: {
+        filename: String,
     }
 });
 
