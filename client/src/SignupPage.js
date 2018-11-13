@@ -2,11 +2,9 @@ import React from "react";
 
 import { withUserContext } from "./context/UserContext";
 import FormContainer from './FormContainer';
-import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
 
 import ninjaHome from "./assets/img/ninjaHome.png";
-
-import Button from "@material-ui/core/Button";
 
 const styles = {
     page: {
@@ -19,37 +17,30 @@ const styles = {
     header: {
         fontSize: "2.5em"
     },
-    Button: {
-        backgroundColor: "#EB3460",
-        color: "#f2f2f2",
-        width: "100px",
-        height: "20px"
-    },
     imgContainer: {
         position: "fixed",
         bottom: "0",
-        left: "0",
-        marginLeft: "10px"
+        right: "0",
+        marginRight: "10px"
     }
 }
 
-function LoginPage({ login }) {
+function SignupPage({ signup }) {
     return (
-        <div className="login-page-container" style={styles.page}>
+        <div className="signup-page-container" style={styles.page} >
             <h1 style={styles.header}>CHORE NINJA</h1>
             <FormContainer inputs={{
                 username: "",
-                password: ""
+                password: "",
+                role: ""
             }}>
                 {props => (
-                    <LoginForm {...props} handleSubmit={login}/>
+                    <SignupForm {...props} handleSubmit={signup}/>
                 )}
             </FormContainer>
-            <h3>Don't have an account?</h3>
-            <Button variant="contained" style={styles.Button}>Sign Up</Button>
             <img src={ninjaHome} alt="" style={styles.imgContainer} />
         </div>
     )
 }
 
-export default withUserContext(LoginPage);
+export default withUserContext(SignupPage);
