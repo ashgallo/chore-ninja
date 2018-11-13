@@ -33,8 +33,8 @@ function Timer({ timeElapsed, isRunning, toggle, reset }) {
         <div style={styles.page}>
             <div style={styles.container}>
                 <TimeElapsed timeElapsed={timeElapsed}/>
-                <Button onClick={toggle} variant="contained" style={styles.timerButton}>{isRunning ? "Stop" : "Start"}</Button>
-                <Button onClick={reset} disabled={timeElapsed === 0} variant="contained" style={styles.resetButton}>Reset</Button>
+                <Button onClick={toggle} disabled={timeElapsed !== 0 && !isRunning} variant="contained" style={styles.timerButton}>{isRunning ? "Stop" : "Start"}</Button>
+                <Button onClick={reset} disabled={timeElapsed === 0 || isRunning} variant="contained" style={styles.resetButton}>Reset</Button>
             </div>
         </div>
         
