@@ -25,7 +25,8 @@ choreRouter.get('/',
   })
 
 // Post a new chore
-choreRouter.post("/", (req, res, next) => {
+choreRouter.post("/", upload.single('image'), (req, res, next) => {
+  req.body.image = req.file;
   const newChore = new Chore(req.body);
   newChore.createdBy = req.user._id;
   newChore.save()
@@ -51,5 +52,9 @@ choreRouter.route("/:id")
       .then(() => res.status(204).send())
       .catch(err => next(err))
   })
+  choreRouter.route('/images/:filename')
+    .get((req, res, next) => {
+      res.sendFile(path.resolve(__dirname, '../temp/', req.params.filename))
+    })
 
 module.exports = choreRouter;

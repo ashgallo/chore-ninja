@@ -10,6 +10,7 @@ rewardAxios.interceptors.request.use((config) => {
 })
 
 const RewardData = createContext();
+const rewardUrl = '/api/rewards'
 
 export default class RewardProvider extends Component {
   constructor() {
@@ -22,14 +23,14 @@ export default class RewardProvider extends Component {
   }
 
   getRewards = () => {
-    return rewardAxios.get("/api/rewards")
+    return rewardAxios.get(rewardUrl)
       .then(response => {
         this.setState({ rewards: response.data });
         return response;
       })
   };
   addReward = (newReward, cb) => {
-    return rewardAxios.post("/api/rewards", newReward)
+    return rewardAxios.post(rewardUrl, newReward)
       .then(response => {
         this.setState(prevState => {
           return { rewards: [...prevState.rewards, response.data] }
@@ -38,7 +39,7 @@ export default class RewardProvider extends Component {
       }, cb)
   };
   editReward = (rewardId, reward) => {
-    return rewardAxios.put(`/api/rewards/${rewardId}`, reward)
+    return rewardAxios.put(`${rewardUrl}/${rewardId}`, reward)
       .then(response => {
         this.setState(prevState => {
           const updatedRewards = prevState.rewards.map(reward => {
@@ -50,7 +51,7 @@ export default class RewardProvider extends Component {
       })
   };
   deleteReward = (rewardId) => {
-    return rewardAxios.delete(`/api/rewards/${rewardId}`)
+    return rewardAxios.delete(`${rewardUrl}/${rewardId}`)
       .then(response => {
         this.setState(prevState => {
           const updatedRewards = prevState.rewards.filter(reward => {
