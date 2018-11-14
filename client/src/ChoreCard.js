@@ -1,19 +1,21 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withChoreContext} from './context/ChoreContext';
+//import Timer from './Timer';
 
-function ChoreCard({ chores, loading, err, location, deleteChore, editChore, info: {_id, category, name, description, startedAt, completed, assignedTo, submittedAt, submitted, points, createdBy, image} }) {
-  const createCard = 
-  return(
+
+function ChoreCard({ chores, loading, err, location, deleteChore, editChore, info: {_id, category, name, description, timeElapsed, completed, assignedTo, submitted, points, image} }) {
+  // const createCard = 
+  return (
     
-    //if role === parent && /api/chores === true, return chore form & index of chores
+    //if role === parent && /api/chores === true, return parent chore card (name, edit, delete)
     location.pathname === '/chores'
     <div>
       <h3>{chore}</h3>
       <img src={`/api/chores/images/${image.filename}`} alt="Chore Image" style={styles.image}/>
     </div>
-    createCard=
-    //if role === child (summary view of chore on dashboard)
+    
+    //if role === child, return card summary 
   
     //if role === parent, return parent/dashboard
 

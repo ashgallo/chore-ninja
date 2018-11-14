@@ -1,26 +1,36 @@
 import React from 'react';
 import { withChoreContext } from './context/ChoreContext';
+import ChoreForm from './ChoreForm';
 //import ChoreCard from './ChoreCard';
-//import ChoreForm from './ChoreForm';
+//import Navbar
+
 
 const DisplayChores = ({chores, deleteChore, editChore}) => {
   const displayCards = chores.map(chore => (
     <ChoreCard key={chore._id} id={chore._id} info={chore} deleteFunction={deleteChore} editFunction={editChore} style={styles.chore}/>
   ))
-
-  
   //if role === parent, return parent/dashboard
 
   //if role === parent && endpoint === true, return chore form & index of chores
   return (
-    createCard
+    {/* <div><Navbar /></div> */}
     <div style={styles.page}>
+      <h1>Chores</h1>
+      <div style={styles.container}>
 
-      <div style={styles.container}></div>
-        <div style={styles.form}>Chore Form</div>
-        <div style={styles.grid}>
-          <div>{displayCards}</div>
+        <div style={styles.form}> 
+          <ChoreForm/> 
         </div>
+
+        <div style={styles.grid}>
+        {/* map through the available kids */}
+          <div>
+            {user.child}
+            {displayCards}
+          </div>
+        </div>
+
+      </div>
     </div>
   ) 
   //if role === child, return child/dashboard
@@ -29,8 +39,6 @@ const DisplayChores = ({chores, deleteChore, editChore}) => {
 }
 
 
-
-        
 const styles = {
   page: {
     backgroundColor: 'white'
