@@ -1,5 +1,7 @@
 import React, { Component, createContext } from "react";
 
+import { withRouter } from "react-router-dom";
+
 import { withChoreContext } from "../context/ChoreContext";
 import { withRewardContext } from "../context/RewardContext";
 
@@ -31,6 +33,7 @@ class UserContext extends Component {
 
     signup = (userInfo) => {
         return e => {
+            e.preventDefault()
             axios.post("/auth/signup", userInfo)
             .then(response => {
                 const { user, token } = response.data
@@ -39,38 +42,38 @@ class UserContext extends Component {
                 this.setState({
                     user,
                     token
-                });
-                return response;
-            });
+                })
+                return response.data.user.role
+            })
+            .then((role) => this.props.history.push(`/${role}/dashboard`))
         }   
     };
-    login = (credentials, cb) => {
+    login = (credentials) => {
         return e => {
             e.preventDefault();
             axios.post("/auth/login", credentials)
                 .then(response => {
-                    const { token, user } = response.data;
+                    let { token, user } = response.data;
                     localStorage.setItem("token", token)
                     localStorage.setItem("user", JSON.stringify(user))
                     this.setState({
                         user,
-                        token
-                    }, cb);
+                        token,
+                    })
+                    this.props.getChores()
+                    this.props.getRewards()
+                    this.props.history.push(`/${user.role}/dashboard`)
                     return response;
                 })
-                .then(this.props.getChores())
-                .then(this.props.getRewards())
         }
     };
     logout = () => {
-        return e => {
             localStorage.removeItem("user");
             localStorage.removeItem("token");
             this.setState({
                 user: {},
                 token: ""
             });
-        }
     };
 
     render() {
@@ -88,7 +91,7 @@ class UserContext extends Component {
     };
 };
 
-export default withChoreContext(withRewardContext(UserContext));
+export default withRouter(withChoreContext(withRewardContext(UserContext)));
 
 export const withUserContext = C => props => (
     <UserData.Consumer>
