@@ -20,7 +20,7 @@ const App = ({ user }) => (
     <Switch>
       <Route path="/signup" component={SignupPage} />
       <Route path="/login" component={LoginPage} />
-      <Route exact path="/" render={() => <Redirect to={`/${user.role}/dashboard`}/>} />
+      <ProtectedRoute exact path="/" render={() => <Redirect to={`/${user.role}/dashboard`}/>} />
       
       <ProtectedRoute exact path="/parent/dashboard" component={ParentDashboard} />
       <ProtectedRoute exact path="/parent/chores" component={ParentChores} />

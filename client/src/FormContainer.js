@@ -24,7 +24,6 @@ export default class FormContainer extends Component {
         const props = {
             inputs: this.state,
             handleChange: this.handleChange,
-            handleSelection: this.handleSelection,
             clearInputs: this.clearInputs
         }
 
