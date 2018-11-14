@@ -7,7 +7,7 @@ import Navbar from "../Navbar";
 
 function Chores({ user }) {
     return (
-        <CheckUser user={user} role="child">
+        <CheckUser user={user} userRole="child">
             <Navbar />
             Child Chores
         </CheckUser>

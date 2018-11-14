@@ -50,7 +50,8 @@ authRouter.get("/verify", expressJwt({ secret: process.env.SECRET }), (req, res,
 })
 
 // Parent - Add a kid and assign
-authRouter.put("/:id/addKid", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
+authRouter.put("/:id/addKid", expressJwt({ secret: process.env.SECRET }), async (req, res, next) => {
+  await Promise.all(req.body.kids.map(kid => User.findByIdAndUpdate(kid, {parents: req.user._id})));
   User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
     .then(editedParent => res.status(200).send(editedParent))
     .catch(err => next(err))
@@ -71,7 +72,7 @@ authRouter.put("/:id/addParent", expressJwt({ secret: process.env.SECRET }), (re
 })
 
 // Parent - Get list of kids assigned to them
-authRouter.get("/", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
+authRouter.get("/getKids", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
   User.find({ parents: req.user._id })
     .then(kids => res.status(200).send(kids))
     .catch(err => next(err))
