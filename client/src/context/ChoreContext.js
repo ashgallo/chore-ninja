@@ -48,7 +48,7 @@ export default class ChoreContext extends Component {
                     return { chores: updatedChores }
                 });
                 return response;
-            });
+            })
     };
     deleteChore = (choreId) => {
         return choreAxios.delete(`${choreUrl}/${choreId}`)
