@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { withUserContext } from "./context/UserContext";
 import FormContainer from './FormContainer';
 import SignupForm from './SignupForm';
 
 import ninjaHome from "./assets/img/ninjaHome.png";
+
+import Button from "@material-ui/core/Button";
 
 const styles = {
     page: {
@@ -16,6 +19,15 @@ const styles = {
     },
     header: {
         fontSize: "2.5em"
+    },
+    Button: {
+        backgroundColor: "#EB3460",
+        width: "100px",
+        height: "20px"
+    },
+    Link: {
+        color: "#f2f2f2",
+        textDecoration: "none"
     },
     imgContainer: {
         position: "fixed",
@@ -38,6 +50,10 @@ function SignupPage({ signup }) {
                     <SignupForm {...props} handleSubmit={signup}/>
                 )}
             </FormContainer>
+            <h3>Already have an account?</h3>
+            <Button variant="contained" style={styles.Button}>
+                <Link to="/login" style={styles.Link}>Login</Link>
+            </Button>
             <img src={ninjaHome} alt="" style={styles.imgContainer} />
         </div>
     )
