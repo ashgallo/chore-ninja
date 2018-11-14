@@ -6,7 +6,7 @@ import { withUserContext } from "../context/UserContext";
 import CheckUser from '../CheckUser';
 
 const Dashboard = ({ user }) => (
-  <CheckUser user={user} role="parent">
+  <CheckUser user={user} userRole="parent">
     <Navbar />
     <h1>Welcome, {user.username}</h1>
     <button style={styles.button}>Add Kid</button>

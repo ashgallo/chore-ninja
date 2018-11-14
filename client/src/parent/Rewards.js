@@ -6,7 +6,7 @@ import { withUserContext } from '../context/UserContext';
 
 function Rewards({ user }) {
     return (
-        <CheckUser user={user} role="parent">
+        <CheckUser user={user} userRole="parent">
             <Navbar />
             Parent Rewards
         </CheckUser>

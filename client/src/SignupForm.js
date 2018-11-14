@@ -31,6 +31,7 @@ const styles = {
     },
     signupButton: {
         backgroundColor: "#0F52BA",
+        color: "#f2f2f2",
         width: "100px",
         height: "20px",
         alignSelf: "center",
