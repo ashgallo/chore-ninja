@@ -9,7 +9,7 @@ class TimerContext extends Component {
         super(props);
         this.state = {
             isRunning: false,
-            timeElapsed: 0
+            timeElapsed: 0,
         }
     }
 
@@ -22,12 +22,18 @@ class TimerContext extends Component {
         })
     }
 
-    reset = () => {
-        clearInterval(this.timer);
-        this.setState({
-            isRunning: false,
-            timeElapsed: 0
-        })
+    complete = (choreId) => {
+        const backToZero = () => {
+            this.setState({
+                isRunning: false,
+                timeElapsed: 0
+            })
+        }
+        return e => {
+            this.props.editChore(choreId, {timeElapsed: this.state.timeElapsed, completed: true})
+            .then(backToZero)
+            .catch(backToZero)         
+        }
     }
 
     startTimer = () => {
@@ -47,7 +53,7 @@ class TimerContext extends Component {
         const props = {
             ...this.state,
             toggle: this.toggle,
-            reset: this.reset
+            complete: this.complete
         }
         return(
             <TimerData.Provider value={props}>

@@ -1,5 +1,6 @@
 const express = require("express");
 const Chore = require("../models/chore");
+const { upload } = require("../photo-config");
 
 const { Router } = express;
 const choreRouter = Router();

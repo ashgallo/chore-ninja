@@ -1,6 +1,5 @@
- const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
 
 const choreSchema = new Schema({
     category: {
@@ -15,7 +14,10 @@ const choreSchema = new Schema({
     description: {
         type: String,
     },
-    startedAt: Date,
+    timeElapsed: {
+        type: Number,
+        default: 0
+    },
     completed: {
         type: Boolean,
         default: false
@@ -25,7 +27,6 @@ const choreSchema = new Schema({
         ref: "User",
         required: true
     },
-    submittedAt: Date,
     submitted: {
         type: Boolean,
         default: false
