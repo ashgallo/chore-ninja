@@ -24,9 +24,18 @@ class UserContext extends Component {
             token: localStorage.getItem("token") || ""
         }
     }
-
+    getUser() {
+        return userAxios.get("/auth/verify")
+            .then(response => {
+                this.setState({ user: response.data })
+                return;
+            })
+    }
+    getKids(){
+        
+    }
     componentDidMount() {
-        userAxios.get("/auth/verify")
+        this.getUser()
             .then(this.props.getChores())
             .then(this.props.getRewards())
     }
@@ -35,18 +44,18 @@ class UserContext extends Component {
         return e => {
             e.preventDefault()
             axios.post("/auth/signup", userInfo)
-            .then(response => {
-                const { user, token } = response.data
-                localStorage.setItem("token", token)
-                localStorage.setItem("user", JSON.stringify(user))
-                this.setState({
-                    user,
-                    token
+                .then(response => {
+                    const { user, token } = response.data
+                    localStorage.setItem("token", token)
+                    localStorage.setItem("user", JSON.stringify(user))
+                    this.setState({
+                        user,
+                        token
+                    })
+                    return response.data.user.role
                 })
-                return response.data.user.role
-            })
-            .then((role) => this.props.history.push(`/${role}/dashboard`))
-        }   
+                .then((role) => this.props.history.push(`/${role}/dashboard`))
+        }
     };
     login = (credentials) => {
         return e => {
@@ -68,12 +77,12 @@ class UserContext extends Component {
         }
     };
     logout = () => {
-            localStorage.removeItem("user");
-            localStorage.removeItem("token");
-            this.setState({
-                user: {},
-                token: ""
-            });
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        this.setState({
+            user: {},
+            token: ""
+        });
     };
 
     render() {

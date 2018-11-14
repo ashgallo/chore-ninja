@@ -8,7 +8,8 @@ import Button from "@material-ui/core/Button";
 const styles = {
     navContainer: {
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        backgroundColor: "#0072a3"
     },
     nav: {
         display: "flex",
@@ -18,7 +19,8 @@ const styles = {
         margin: "10px"
     },
     Link: {
-        textDecoration: "none"
+        textDecoration: "none",
+        color: "#f2f2f2"
     },
     Button: {
         backgroundColor: "#5ECFA1",
