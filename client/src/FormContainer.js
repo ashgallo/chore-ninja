@@ -18,12 +18,13 @@ export default class FormContainer extends Component {
             }
             return newState;
         }) 
-    }
+    };
 
     render() {
         const props = {
             inputs: this.state,
             handleChange: this.handleChange,
+            handleSelection: this.handleSelection,
             clearInputs: this.clearInputs
         }
 
