@@ -7,7 +7,7 @@ import goalGraph from '../goal-graph.png';
 import { withUserContext } from "../context/UserContext";
 
 const Dashboard = ({ user }) => (
-  <CheckUser user={user} role="child">
+  <CheckUser user={user} userRole="child">
     <Navbar />
     <h1>Welcome, {user.username}</h1>
     <button style={styles.addButton}>Add Parent</button>

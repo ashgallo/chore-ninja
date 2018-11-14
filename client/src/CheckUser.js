@@ -1,9 +1,9 @@
 import React from "react";
 import NotAuthorized from './NotAuthorized';
 
-function CheckParent({ user, children, role }) {
+function CheckParent({ user, children, userRole }) {
     return (
-        user.role === role ?
+        user.role === userRole ?
             children
             :
             <NotAuthorized />

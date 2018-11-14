@@ -7,7 +7,7 @@ import Navbar from "../Navbar";
 
 function Rewards({ user }) {
     return (
-        <CheckUser user={user} role="child">
+        <CheckUser user={user} userRole="child">
             <Navbar />
             Child Rewards
         </CheckUser>
