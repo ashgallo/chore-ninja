@@ -12,4 +12,4 @@ function Protectedroute({ token, component }) {
     )
 }
 
-export default withUserContext(Protectedroute);
+export default withUserContext(Protectedroute); 
