@@ -45,9 +45,11 @@ const styles = {
     }
 }
 
-function SignupForm({ handleSubmit, handleChange, inputs }) {
+// FIXME: FIXME: FIXME: WHEN SIGNING UP, NETWORK TAB SHOWS PLAIN TEXT PSWD
+
+function SignupForm({ handleSubmit, handleChange, clearInputs, inputs }) {
     return (
-        <form onSubmit={handleSubmit(inputs)} className="signup-form" style={styles.form}>
+        <form onSubmit={handleSubmit(inputs, clearInputs)} className="signup-form" style={styles.form}>
             <label style={styles.label}>New Username</label>
             <input onChange={handleChange} name="username" value={inputs.username} type="text" style={styles.input}/>
 
@@ -57,11 +59,11 @@ function SignupForm({ handleSubmit, handleChange, inputs }) {
             <label style={styles.radioContainerLabel}>Signing up as a...</label>
             <div style={styles.radioContainer}>
                 <label style={styles.radioLabel}>
-                    <input onChange={handleChange} name="role" value={inputs.usertype} type="radio" />
+                    <input onChange={handleChange} name="role" value="parent" type="radio" checked={inputs.role === "parent"}/>
                     Parent
                 </label>
                 <label style={styles.radioLabel}>
-                    <input onChange={handleChange} name="role" value={inputs.usertype} type="radio"/>
+                    <input onChange={handleChange} name="role" value="child" type="radio" checked={inputs.role === "child"}/>
                     Child
                 </label>
             </div>

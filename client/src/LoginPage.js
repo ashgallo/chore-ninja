@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { withUserContext } from "./context/UserContext";
 import FormContainer from './FormContainer';
@@ -21,9 +22,12 @@ const styles = {
     },
     Button: {
         backgroundColor: "#EB3460",
-        color: "#f2f2f2",
         width: "100px",
         height: "20px"
+    },
+    Link: {
+        color: "#f2f2f2",
+        textDecoration: "none"
     },
     imgContainer: {
         position: "fixed",
@@ -46,7 +50,9 @@ function LoginPage({ login }) {
                 )}
             </FormContainer>
             <h3>Don't have an account?</h3>
-            <Button variant="contained" style={styles.Button}>Sign Up</Button>
+            <Button variant="contained" style={styles.Button}>
+                <Link to="/signup" style={styles.Link}>Sign Up</Link>
+            </Button>
             <img src={ninjaHome} alt="" style={styles.imgContainer} />
         </div>
     )

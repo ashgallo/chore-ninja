@@ -1,11 +1,12 @@
 import React from 'react';
-//import Navbar
+import Navbar from "../Navbar";
 // import timeGraph from '../time-graph.png';
 import goalGraph from '../goal-graph.png';
 
 const Dashboard = () => (
   <div>
-    <h1>Welcome, User</h1>
+    <Navbar />
+    <h1>Welcome, Child</h1>
     <button style={styles.addButton}>Add Parent</button>
 
     <div style={styles.container}>
