@@ -3,10 +3,13 @@ import Navbar from "../Navbar";
 import timeGraph from '../time-graph.png';
 import goalGraph from '../goal-graph.png';
 
-const Dashboard = () => (
-  <div>
+import { withUserContext } from "../context/UserContext";
+import CheckUser from '../CheckUser';
+
+const Dashboard = ({ user }) => (
+  <CheckUser user={user} role="parent">
     <Navbar />
-    <h1>Welcome, Parent</h1>
+    <h1>Welcome, {user.username}</h1>
     <button style={styles.button}>Add Kid</button>
 
     <div style={styles.container}>
@@ -30,7 +33,7 @@ const Dashboard = () => (
       </div>
       
     </div>
-  </div>
+  </CheckUser>
 )
 
 const styles = {
@@ -101,4 +104,4 @@ const styles = {
   }
 }
 
-export default Dashboard;
+export default withUserContext(Dashboard);

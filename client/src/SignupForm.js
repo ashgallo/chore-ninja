@@ -45,8 +45,6 @@ const styles = {
     }
 }
 
-// FIXME: FIXME: FIXME: WHEN SIGNING UP, NETWORK TAB SHOWS PLAIN TEXT PSWD
-
 function SignupForm({ handleSubmit, handleChange, clearInputs, inputs }) {
     return (
         <form onSubmit={handleSubmit(inputs, clearInputs)} className="signup-form" style={styles.form}>

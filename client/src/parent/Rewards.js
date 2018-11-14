@@ -1,14 +1,16 @@
 import React from "react";
 
 import Navbar from "../Navbar";
+import CheckUser from '../CheckUser';
+import { withUserContext } from '../context/UserContext';
 
-function Rewards() {
+function Rewards({ user }) {
     return (
-        <div>
+        <CheckUser user={user} role="parent">
             <Navbar />
             Parent Rewards
-        </div>
+        </CheckUser>
     )
 }
 
-export default Rewards;
+export default withUserContext(Rewards);
