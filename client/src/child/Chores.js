@@ -1,14 +1,17 @@
 import React from "react";
 
+import { withUserContext } from "../context/UserContext"
+
+import CheckUser from '../CheckUser';
 import Navbar from "../Navbar";
 
-function Chores() {
+function Chores({ user }) {
     return (
-        <div>
+        <CheckUser user={user} role="child">
             <Navbar />
             Child Chores
-        </div>
+        </CheckUser>
     )
 }
 
-export default Chores;
+export default withUserContext(Chores);
