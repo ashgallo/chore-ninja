@@ -1,7 +1,18 @@
 import React, { Component, createContext } from "react";
 import axios from "axios";
 
-const choreAxios = axios.create();
+const choreAxios = axios.create({
+    transformRequest: [data => {
+        const formData = new FormData();
+        for(let key in data){
+            if(data.hasOwnProperty(key)){
+                formData.append(key, data[key])
+            }
+        };
+        return formData;
+    }]
+});
+
 const choreUrl = "/api/chores"
 
 choreAxios.interceptors.request.use((config) => {

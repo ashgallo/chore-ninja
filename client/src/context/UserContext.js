@@ -29,7 +29,7 @@ class UserContext extends Component {
             .then(response => response.data);
         const kids = await this.getKids()
         user.kids = kids;
-        this.setState({ user }) 
+        this.setState({ user })
     }
 
     async getKids() {
@@ -60,25 +60,25 @@ class UserContext extends Component {
                 .then((role) => this.props.history.push(`/${role}/dashboard`))
         }
     };
+    sendCredentials = credentials => axios.post("/auth/login", credentials)
+        .then(response => response.data);
+
     login = (credentials) => {
-        return e => {
+        return async e => {
             e.preventDefault();
-            axios.post("/auth/login", credentials)
-                .then(response => {
-                    let { token, user } = response.data;
-                    localStorage.setItem("token", token)
-                    localStorage.setItem("user", JSON.stringify(user))
-                    this.setState({
-                        user,
-                        token,
-                    }, () => {
-                        this.getKids();
-                        this.props.getChores()
-                        this.props.getRewards()
-                        this.props.history.push(`/${user.role}/dashboard`)
-                    })
-                    return response;
-                })
+            const { user, token } = await this.sendCredentials(credentials);
+            localStorage.setItem("token", token)
+            localStorage.setItem("user", JSON.stringify(user))
+            const kids = await this.getKids();
+            user.kids = kids;
+            this.setState({
+                user,
+                token,
+            }, () => {
+                this.props.getChores()
+                this.props.getRewards()
+                this.props.history.push(`/${user.role}/dashboard`)
+            })
         }
     };
     logout = () => {

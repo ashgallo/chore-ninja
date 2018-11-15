@@ -8,6 +8,7 @@ const PORT = process.env.PORT;
 
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(express.urlencoded());
 app.use("/api", expressJwt({ secret: process.env.SECRET }));
 
 mongoose.set("useCreateIndex", true);
