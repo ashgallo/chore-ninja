@@ -2,7 +2,7 @@ import React from "react";
 import CheckUser from '../CheckUser';
 import { withUserContext } from '../context/UserContext';
 import Navbar from "../Navbar";
-import Form from '../Form';
+import ChoreForm from '../ChoreForm';
 import ninjaHome from "../assets/img/ninjaHome.png";
 
 //import DisplayChores from '../DisplayChores';
