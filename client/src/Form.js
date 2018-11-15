@@ -7,13 +7,11 @@ class Form extends Component {
   constructor() {
     super();
     this.state = {
-      user: "",
-      category: "",
+      category: "kitchen",
       name: "",
       description: "",
       points: "",
       assignedTo: "",
-      image: ""
     };
     this.uploader = createRef();
   }
@@ -22,8 +20,10 @@ class Form extends Component {
     this.setState({ [name]: value })
   };
 
-
-  handleSubmit(e) {
+  // handleSubmit = ({ ...this.state, image: this.uploader.current.files[0]}) => {
+  //   this.setState({ [name]: value })
+  // };
+  handleSubmit = e => {
     e.preventDefault();
     const reqBody = { ...this.state, image: this.uploader.current.files[0] }
     this.props.addChore(reqBody)
@@ -39,27 +39,24 @@ class Form extends Component {
     });
   }
 
-
-
   render() {
     const selectCategory = ["kitchen", "pets", "bathroom", "bedroom", "livingroom", "yard", "laundry", "other"]
 
     const categoryOptions = selectCategory.map((category, i) => (
-      <option name={category} value={selectCategory[i]} key={i}>{selectCategory[i]}</option>
+      <option value={category} key={i}>{category}</option>
     ))
 
     const assigneeRadios = this.props.user.kids.map(kid => (
-      <label key={kid._id} htmlFor="">
+      <label key={kid._id}>
         {kid.username}
-        <input key={kid._id} onChange={this.handleChange}name="assignedTo" type="radio" value={kid.username} checked={this.state.assignedTo === kid.username} />
+        <input onChange={this.handleChange} name="assignedTo" type="radio" value={kid._id} checked={this.state.assignedTo === kid._id} />
       </label>
     ))
     return (
       <form onSubmit={this.handleSubmit} style={styles.container}>
         <div style={styles.row1}>
           <label style={styles.label}>Category:</label>
-          <select onChange={this.handleChange}>
-            <option value="category"></option>
+          <select onChange={this.handleChange} name="category" value={this.state.category}>
             {categoryOptions}
           </select>
 
@@ -75,7 +72,7 @@ class Form extends Component {
           <input name="points" type="number" value={this.state.points} onChange={this.handleChange} />
 
           <label style={styles.label}>Image:</label>
-          <input ref={this.uploader} name="image" type="file" value={this.state.image} onChange={this.handleChange} />
+          <input ref={this.uploader} name="image" type="file" />
         </div>
 
         <div style={styles.row3}>
