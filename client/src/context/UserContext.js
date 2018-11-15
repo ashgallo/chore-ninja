@@ -20,29 +20,38 @@ class UserContext extends Component {
     constructor() {
         super();
         this.state = {
-            user: JSON.parse(localStorage.getItem("user")) || {},
+            user: {},
             token: localStorage.getItem("token") || ""
         }
     }
+
     async getUser() {
         const user = await userAxios.get("/auth/verify")
             .then(response => response.data);
         const kids = await this.getKids()
         user.kids = kids;
         this.setState({ user })
-    }
-
+    };
     async getKids() {
         return userAxios.get("/auth/getKids")
             .then(response => response.data)
-    }
-
-    componentDidMount() {
-        this.getUser()
-            .then(this.props.getChores())
-            .then(this.props.getRewards())
-    }
-
+    };
+    addKid = (inputs, cb) => {
+        return async e => {
+            e.preventDefault();
+            const kidUsernames = this.state.user.kids.map(kid => kid.username);
+            if (kidUsernames.includes(inputs.kid)) {
+                alert('There is a glitch in the Matrix...');
+            } else {
+                kidUsernames.push(inputs.kid);
+                const user = await userAxios.put(`/auth/${this.state.user._id}/addKid`, { kids: kidUsernames })
+                    .then(response => response.data)
+                const kids = await this.getKids();
+                user.kids = kids;
+                this.setState({ user }, cb);
+            }
+        }
+    };
     signup = (userInfo) => {
         return e => {
             e.preventDefault()
@@ -50,7 +59,7 @@ class UserContext extends Component {
                 .then(response => {
                     const { user, token } = response.data
                     localStorage.setItem("token", token)
-                    localStorage.setItem("user", JSON.stringify(user))
+                    // localStorage.setItem("user", JSON.stringify(user))
                     this.setState({
                         user,
                         token
@@ -60,15 +69,16 @@ class UserContext extends Component {
                 .then((role) => this.props.history.push(`/${role}/dashboard`))
         }
     };
-    sendCredentials = credentials => axios.post("/auth/login", credentials)
-        .then(response => response.data);
-
+    sendCredentials = credentials => {
+        axios.post("/auth/login", credentials)
+            .then(response => response.data);
+    };
     login = (credentials) => {
         return async e => {
             e.preventDefault();
             const { user, token } = await this.sendCredentials(credentials);
             localStorage.setItem("token", token)
-            localStorage.setItem("user", JSON.stringify(user))
+            // localStorage.setItem("user", JSON.stringify(user))
             const kids = await this.getKids();
             user.kids = kids;
             this.setState({
@@ -90,12 +100,19 @@ class UserContext extends Component {
         });
     };
 
+    componentDidMount() {
+        this.getUser()
+            .then(this.props.getChores())
+            .then(this.props.getRewards())
+    }
+
     render() {
         const props = {
             ...this.state,
             signup: this.signup,
             login: this.login,
-            logout: this.logout
+            logout: this.logout,
+            addKid: this.addKid
         }
         return (
             <UserData.Provider value={props}>
