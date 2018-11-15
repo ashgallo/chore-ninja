@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from "../Navbar";
 import timeGraph from '../time-graph.png';
 import goalGraph from '../goal-graph.png';
-
 import { withUserContext } from "../context/UserContext";
 import CheckUser from '../CheckUser';
 
@@ -41,10 +40,10 @@ const styles = {
     padding: '10px',
     borderRadius: '5px',
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: 55,
+    right: 200,
     margin: '10px',
-    fontSize: '20px',
+    fontSize: '18px',
     cursor: 'pointer',
     textAlign: 'center',
     backgroundColor: '#0072a3',
