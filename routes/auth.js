@@ -59,6 +59,7 @@ authRouter.put("/:id/addKid", expressJwt({ secret: process.env.SECRET }), async 
     .catch(err => next(err))
 });
 
+// FIXME: This will delete the parent because of req.params.id
 // Parent - Delete a kid assigned to them
 authRouter.delete("/:id/deleteKid", expressJwt({ secret: process.env.SECRET }), (req, res, next) => {
   User.deleteOne({ _id: req.params.id })
