@@ -24,16 +24,19 @@ class UserContext extends Component {
             token: localStorage.getItem("token") || ""
         }
     }
-    getUser() {
-        return userAxios.get("/auth/verify")
-            .then(response => {
-                this.setState({ user: response.data })
-                return;
-            })
+    async getUser() {
+        const user = await userAxios.get("/auth/verify")
+            .then(response => response.data);
+        const kids = await this.getKids()
+        user.kids = kids;
+        this.setState({ user }) 
     }
-    getKids(){
-        
+
+    async getKids() {
+        return userAxios.get("/auth/getKids")
+            .then(response => response.data)
     }
+
     componentDidMount() {
         this.getUser()
             .then(this.props.getChores())
@@ -68,10 +71,12 @@ class UserContext extends Component {
                     this.setState({
                         user,
                         token,
+                    }, () => {
+                        this.getKids();
+                        this.props.getChores()
+                        this.props.getRewards()
+                        this.props.history.push(`/${user.role}/dashboard`)
                     })
-                    this.props.getChores()
-                    this.props.getRewards()
-                    this.props.history.push(`/${user.role}/dashboard`)
                     return response;
                 })
         }

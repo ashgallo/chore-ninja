@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
-import { withChoreContext} from './context/ChoreContext';
-import { withUserContext} from './context/UserContext';
+import { withChoreContext } from './context/ChoreContext';
+import { withUserContext } from './context/UserContext';
 import Button from '@material-ui/core/Button';
 
 class Form extends Component {
@@ -18,27 +18,27 @@ class Form extends Component {
     this.uploader = createRef();
   }
 
-  handleChange = ({ target: { name, value }}) => {
+  handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value })
-};
+  };
 
 
   handleSubmit(e) {
     e.preventDefault();
-    const reqBody = {...this.state, image: this.uploader.current.files[0]}
+    const reqBody = { ...this.state, image: this.uploader.current.files[0] }
     this.props.addChore(reqBody)
   };
 
   clearInputs = () => {
     this.setState(prevState => {
-        let newState = {}
-        for(let key in prevState) {
-            newState[key] = ""
-        }
-        return newState;
+      let newState = {}
+      for (let key in prevState) {
+        newState[key] = ""
+      }
+      return newState;
     });
   }
-   
+
 
 
   render() {
@@ -49,9 +49,12 @@ class Form extends Component {
     ))
 
     const assigneeRadios = this.props.user.kids.map(kid => (
-      <input key={kid._id} name="assignedTo" type="radio" value={kid.username} checked={this.state.assignedTo === kid.username}/>
+      <label htmlFor="">
+        {kid.username}
+        <input key={kid._id} onChange={this.handleChange}name="assignedTo" type="radio" value={kid.username} checked={this.state.assignedTo === kid.username} />
+      </label>
     ))
-    return(
+    return (
       <form onSubmit={this.handleSubmit} style={styles.container}>
         <div style={styles.row1}>
           <label style={styles.label}>Category:</label>
@@ -76,7 +79,6 @@ class Form extends Component {
         </div>
 
         <div style={styles.row3}>
-          <label style={styles.label}>kid1</label>
           {/* <input name="assignedTo" type="radio" value={this.state.assignedTo} onChange={this.handleChange} checked={this.assignedTo === {assigneeRadios}} /> */}
           {assigneeRadios}
         </div>
@@ -88,7 +90,7 @@ class Form extends Component {
     )
   }
 }
-   
+
 const styles = {
   container: {
     position: 'relative',
