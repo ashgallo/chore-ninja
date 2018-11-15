@@ -1,53 +1,62 @@
 import React from 'react';
+
+import { withUserContext } from "../context/UserContext";
+
+import CheckUser from '../CheckUser';
 import Navbar from "../Navbar";
+import FormContainer from '../FormContainer';
+import AddKidForm from '../AddKidForm';
+
 import timeGraph from '../time-graph.png';
 import goalGraph from '../goal-graph.png';
-import { withUserContext } from "../context/UserContext";
-import CheckUser from '../CheckUser';
 
-const Dashboard = ({ user }) => (
-  <CheckUser user={user} userRole="parent">
-    <Navbar />
-    <h1>Welcome, {user.username}</h1>
-    <button style={styles.button}>Add Kid</button>
-
-    <div style={styles.container}>
-      <h3 style={styles.child}>Child 1</h3>
-
-      <div style={styles.row1}>
-        <h4 style={styles.headers}>Chores to approve:</h4>
+function Dashboard({ user, addKid }) {
+  return (
+    <CheckUser user={user} userRole="parent">
+      <Navbar />
+      <div style={styles.headerContainer}>
+        <h1>Welcome, {user.username}</h1>
+        <FormContainer inputs={{
+          "kid": ""
+        }}>
+          {props => (
+            <AddKidForm {...props} handleSubmit={addKid} />
+          )}
+        </FormContainer>
       </div>
 
-      <div style={styles.row2}>
-        <h4 style={styles.headers}>Rewards to approve:</h4>
+      <div style={styles.container}>
+        <h3 style={styles.child}>Child 1</h3>
+
+        <div style={styles.row1}>
+          <h4 style={styles.headers}>Chores to approve:</h4>
+        </div>
+
+        <div style={styles.row2}>
+          <h4 style={styles.headers}>Rewards to approve:</h4>
+        </div>
+
+        <div style={styles.column2}>
+          <img src={timeGraph} alt='Time Graph' style={styles.img}></img>
+        </div>
+
+
+        <div style={styles.column3}>
+          <img src={goalGraph} alt='Goal Graph' style={styles.img}></img>
+        </div>
+
       </div>
-      
-      <div style={styles.column2}>
-        <img src={timeGraph} alt='Time Graph' style={styles.img}></img>
-      </div>
-    
-    
-      <div style={styles.column3}>
-        <img src={goalGraph} alt='Goal Graph' style={styles.img}></img>
-      </div>
-      
-    </div>
-  </CheckUser>
-)
+    </CheckUser>
+  )
+}
 
 const styles = {
-  button: {
-    padding: '10px',
-    borderRadius: '5px',
-    position: 'absolute',
-    top: 55,
-    right: 200,
-    margin: '10px',
-    fontSize: '18px',
-    cursor: 'pointer',
-    textAlign: 'center',
-    backgroundColor: '#0072a3',
-    color: '#f2f2f2'
+  headerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    margin: "0 20px"
   },
   container: {
     position: 'relative',
@@ -63,7 +72,7 @@ const styles = {
   child: {
     gridColumnStart: 1,
     gridColumnEnd: 1,
-    gridRowStart1: 1, 
+    gridRowStart1: 1,
     margin: 0
   },
   row1: {

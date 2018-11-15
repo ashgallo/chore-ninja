@@ -9,7 +9,7 @@ export default class FormContainer extends Component {
     handleChange = ({ target: { name, value }}) => {
         this.setState({ [name]: value })
     };
-
+ 
     clearInputs = () => {
         this.setState(prevState => {
             let newState = {}

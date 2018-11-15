@@ -51,8 +51,10 @@ authRouter.get("/verify", expressJwt({ secret: process.env.SECRET }), (req, res,
 
 // Parent - Add a kid and assign
 authRouter.put("/:id/addKid", expressJwt({ secret: process.env.SECRET }), async (req, res, next) => {
-  await Promise.all(req.body.kids.map(kid => User.findByIdAndUpdate(kid, {parents: req.user._id})));
-  User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+
+  await Promise.all(req.body.kids.map(kid => User.findOneAndUpdate({ username: kid }, { parents: req.user._id }, { new: true })));
+  const kids = await User.find({ parents: req.user._id });
+  User.findOneAndUpdate({ _id: req.params.id }, { kids: kids.map(kid => kid._id) }, { new: true })
     .then(editedParent => res.status(200).send(editedParent))
     .catch(err => next(err))
 });
