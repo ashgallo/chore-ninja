@@ -49,7 +49,7 @@ class Form extends Component {
     ))
 
     const assigneeRadios = this.props.user.kids.map(kid => (
-      <label htmlFor="">
+      <label key={kid._id} htmlFor="">
         {kid.username}
         <input key={kid._id} onChange={this.handleChange}name="assignedTo" type="radio" value={kid.username} checked={this.state.assignedTo === kid.username} />
       </label>
