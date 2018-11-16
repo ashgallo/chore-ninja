@@ -21,7 +21,7 @@ class UserContext extends Component {
         super();
         this.state = {
             user: {},
-            token: localStorage.getItem("token") || ""
+            token: localStorage.getItem("token") || "",
         }
     }
 
@@ -59,7 +59,6 @@ class UserContext extends Component {
                 .then(response => {
                     const { user, token } = response.data
                     localStorage.setItem("token", token)
-                    // localStorage.setItem("user", JSON.stringify(user))
                     this.setState({
                         user,
                         token
@@ -77,12 +76,11 @@ class UserContext extends Component {
             e.preventDefault();
             const { user, token } = await this.sendCredentials(credentials);
             localStorage.setItem("token", token)
-            // localStorage.setItem("user", JSON.stringify(user))
             const kids = await this.getKids();
             user.kids = kids;
             this.setState({
                 user,
-                token,
+                token
             }, () => {
                 this.props.getChores()
                 this.props.getRewards()
