@@ -12,38 +12,20 @@ const DisplayChores = ({user, chores, deleteChore, editChore}) => {
  
   return (
     <CheckUser user={user} userRole="parent">
-    <div>
       <div style={styles.container}>
-
-        <div style={styles.grid}>
-        {/* map through the available kids */}
-          <div>
-            {/* {user.child} */}
-            {displayCards}
-          </div>
-        </div>
+        {displayCards}
       </div>
-    </div>
     </CheckUser>
   )
 }
 
-
 const styles = {
   container: {
     position: 'relative',
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gridGap: '10px',
-    border: 'solid 3px black',
-    margin: '10px',
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 2fr',
-    gridTemplateRows: '1fr',
-    gridAutoColumns: '125px',
-    gridAutoRows: '125px'
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    margin: '40px 10px',
   },
   chore: {
     gridRowStart: 2,

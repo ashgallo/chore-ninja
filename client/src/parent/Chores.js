@@ -37,9 +37,6 @@ const styles = {
   },
   logo: {
     marginLeft: '10px',
-  },
-  displayCards: {
-
   }
 }
 
