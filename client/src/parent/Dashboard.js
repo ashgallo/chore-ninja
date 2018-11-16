@@ -26,7 +26,7 @@ function Dashboard({ user, addKid }) {
       </div>
 
       <div style={styles.container}>
-        <h3 style={styles.child}>Sally</h3>
+        <h3 style={styles.child}>Brooke</h3> 
 
         <div style={styles.row1}>
           <h4 style={styles.headers}>Chores to approve:</h4>

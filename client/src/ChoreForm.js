@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react';
 import { withChoreContext } from './context/ChoreContext';
 import { withUserContext } from './context/UserContext';
 import { IconButton } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddCircle';
+import AddIcon from '@material-ui/icons/Add';
 
 class ChoreForm extends Component {
   constructor() {
@@ -79,7 +79,7 @@ class ChoreForm extends Component {
         </div>
 
         <div style={styles.column4}>
-          <IconButton type="submit" variant='contained'><AddIcon style={styles.button}/></IconButton>
+          <IconButton type="submit" variant='contained' style={styles.button}><AddIcon fontSize='large' textAlign='center'/></IconButton>
         </div>
       </form>
     )
@@ -139,20 +139,20 @@ const styles = {
     gridRowEnd: 4,
     fontFamily: 'Acme, sans-serif',
     fontSize: '25px',
+    marginTop: '10px'
   },
   column4: {
     gridColumnStart: 4,
     gridColumnEnd: 5,
-    gridRowStart: 1,
+    gridRowStart: 2,
     gridRowEnd: 4,
     display: 'flex',
-    
   },
   button: {
-    color: '#EB3460',
-    width: '70px',
-    height: '70px',
-    borderRadius: '50px',
+    backgroundColor: '#EB3460',
+    color: '#f2f2f2',
+    width: '50px',
+    height: '50px',
     margin: 0
   }
 }
