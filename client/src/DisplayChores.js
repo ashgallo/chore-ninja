@@ -5,19 +5,11 @@ import { withUserContext } from './context/UserContext';
 import ChoreCard from './ChoreCard';
 import CheckUser from './CheckUser';
 
-
-//<div style={styles.displayCards}>
-
-
 const DisplayChores = ({user, chores, deleteChore, editChore}) => {
   const displayCards = chores.map(chore => (
     <ChoreCard key={chore._id} id={chore._id} info={chore} deleteFunction={deleteChore} editFunction={editChore} style={styles.chore}/>
   ))
-  //if role === parent, return parent/dashboard
-
-  //if role === parent && endpoint === true, return chore form & index of chores
-  //if role === child, return child/dashboard
-  //if role === child && endpoint === true, return detailed chore cards
+ 
   return (
     <CheckUser user={user} userRole="parent">
     <div>
