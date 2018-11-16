@@ -1,7 +1,17 @@
 import React, { Component, createContext } from 'react';
 import axios from 'axios';
 
-const rewardAxios = axios.create();
+const rewardAxios = axios.create({
+  transformRequest: [data => {
+    const formData = new FormData();
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            formData.append(key, data[key])
+        }
+    };
+    return formData;
+}]
+});
 
 rewardAxios.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
@@ -30,13 +40,18 @@ export default class RewardProvider extends Component {
       }
     }
     return fetch(url, options)
-      .then(res => res.blob()).then(blob => URL.createObjectURL(blob))
+      .then(res => {
+        return res.blob()
+      }).then(blob => {
+        return URL.createObjectURL(blob)
+      })
   }
   getRewards = () => {
     return rewardAxios.get(rewardUrl)
-      .then(async response => {
+      .then(async (response) => {
         const rewards = await Promise.all(response.data.map(reward => this.blobify(`/api/rewards/images/${reward.image.filename}`)
           .then(src => ({ ...reward, image: { ...reward.image, src } }))))
+          
         this.setState({ rewards });
         return response;
       })
@@ -55,10 +70,13 @@ export default class RewardProvider extends Component {
   };
   editReward = (rewardId, reward) => {
     return rewardAxios.put(`${rewardUrl}/${rewardId}`, reward)
-      .then(response => {
+      .then( async response => {
+        const updatedReward = response.data;
+        const src = await this.blobify(`/api/rewards/images/${updatedReward.image.filename}`);
+        updatedReward.image.src = src;
         this.setState(prevState => {
           const updatedRewards = prevState.rewards.map(reward => {
-            return reward._id === response.data._id ? response.data : reward
+            return reward._id === rewardId? updatedReward : reward
           })
           return { rewards: updatedRewards }
         })
@@ -83,7 +101,7 @@ export default class RewardProvider extends Component {
       <RewardData.Provider
         value = {{
           getRewards: this.getRewards,
-          addReward: this.getReward,
+          addReward: this.addReward,
           editReward: this.editReward,
           deleteReward: this.deleteReward,
           ...this.state

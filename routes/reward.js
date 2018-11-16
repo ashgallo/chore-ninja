@@ -1,5 +1,7 @@
 const express = require("express");
 const Reward = require("../models/reward");
+const { upload } = require("../photo-config");
+const path = require("path");
 
 const { Router } = express;
 const rewardRouter = Router();
@@ -22,7 +24,8 @@ rewardRouter.get("/",
     }
 )
 
-rewardRouter.post('/', (req, res, next) => {
+rewardRouter.post('/', upload.single('image'),(req, res, next) => {
+    req.body.image = req.file;
     const newReward = new Reward(req.body);
     newReward.createdBy = req.user._id;
     newReward.save()
@@ -49,6 +52,6 @@ rewardRouter.route("/:id")
     })
 rewardRouter.route('/images/:filename')
     .get((req, res, next) => {
-    res.sendFile(path.resolve(__dirname, '../temp/', req.params.filename))
+        res.sendFile(path.resolve(__dirname, '../temp/', req.params.filename))
 })
 module.exports = rewardRouter;
