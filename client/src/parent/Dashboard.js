@@ -1,14 +1,12 @@
 import React from 'react';
-
 import { withUserContext } from "../context/UserContext";
-
 import CheckUser from '../CheckUser';
 import Navbar from "../Navbar";
 import FormContainer from '../FormContainer';
 import AddKidForm from '../AddKidForm';
-
 import timeGraph from '../time-graph.png';
 import goalGraph from '../goal-graph.png';
+import approve from '../approve.png';
 
 function Dashboard({ user, addKid }) {
   return (
@@ -30,10 +28,12 @@ function Dashboard({ user, addKid }) {
 
         <div style={styles.row1}>
           <h4 style={styles.headers}>Chores to approve:</h4>
+          <img src={approve} alt='approve' style={styles.img}></img>
         </div>
 
         <div style={styles.row2}>
           <h4 style={styles.headers}>Rewards to approve:</h4>
+          <img src={approve} alt='approve' style={styles.img}></img>
         </div>
 
         <div style={styles.column2}>
