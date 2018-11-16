@@ -25,7 +25,7 @@ const styles = {
     Button: {
         backgroundColor: "#5ECFA1",
         justifySelf: "flexEnd",
-        margin: "5px"
+        margin: "5px 10px"
     }
 }
 
