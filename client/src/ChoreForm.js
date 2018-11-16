@@ -45,9 +45,9 @@ class ChoreForm extends Component {
     ))
 
     const assigneeRadios = this.props.user.kids.map(kid => (
-      <label key={kid._id}>
+      <label key={kid._id} style={styles.assignedTo}>
         {kid.username}
-        <input onChange={this.handleChange} name="assignedTo" type="radio" value={kid._id} checked={this.state.assignedTo === kid._id} />
+        <input onChange={this.handleChange} name="assignedTo" type="radio" value={kid._id} checked={this.state.assignedTo === kid._id} style={styles.radio}/>
       </label>
     ))
     return (
@@ -92,18 +92,26 @@ const styles = {
     display: 'grid',
     gridTemplateColumns: '.5fr .3fr .3fr .5fr',
     gridGap: '10px',
-    margin: '10px'
+    margin: '0px'
   },
   label: {
-    margin: '10px'
+    margin: '10px',
+    fontFamily: 'Acme, sans-serif',
+    fontSize: '25px',
+    color: "#373738",
   },
   dropdown: {
-    margin: 0,
-    height: '20px',
-    width: '50px'
+    margin: 0
+  },
+  assignedTo: {
+    margin: '20px',
+    color: '#373738',
+  },
+  radio: {
+    marginLeft: 15
   },
   input: {
-    height: '20px',
+    height: '30px',
     width: '100px'
   },
   row1: {
@@ -129,6 +137,8 @@ const styles = {
     gridColumnEnd: 4,
     gridRowStart: 3,
     gridRowEnd: 4,
+    fontFamily: 'Acme, sans-serif',
+    fontSize: '25px',
   },
   column4: {
     gridColumnStart: 4,
@@ -140,7 +150,6 @@ const styles = {
   },
   button: {
     color: '#EB3460',
-    baclgroundColor: '#f2f2f2',
     width: '70px',
     height: '70px',
     borderRadius: '50px',

@@ -47,5 +47,8 @@ rewardRouter.route("/:id")
             .then(() => res.status(204).send())
             .catch(err => next(err))
     })
-
+rewardRouter.route('/images/:filename')
+    .get((req, res, next) => {
+    res.sendFile(path.resolve(__dirname, '../temp/', req.params.filename))
+})
 module.exports = rewardRouter;

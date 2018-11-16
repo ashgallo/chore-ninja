@@ -10,11 +10,15 @@ const styles = {
         marginBottom: "50px"
     },
     label: {
-        color: "#606060"
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '25px',
+        color: "#373738",
     },
     radioContainerLabel: {
         alignSelf: "center",
-        color: "#606060"
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738'
     },
     radioLabel: {
         margin: "10px"
@@ -30,9 +34,11 @@ const styles = {
         outlineColor: "#0F52BA"
     },
     signupButton: {
-        backgroundColor: "#0F52BA",
-        color: "#f2f2f2",
-        width: "100px",
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
+        backgroundColor: '#fff8ac',
+        width: "120px",
         height: "20px",
         alignSelf: "center",
         marginTop: "10px",
@@ -42,20 +48,22 @@ const styles = {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        color: "#606060"
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
     }
 }
 
 function SignupForm({ handleSubmit, handleChange, clearInputs, inputs }) {
     return (
         <form onSubmit={handleSubmit(inputs, clearInputs)} className="signup-form" style={styles.form}>
-            <label style={styles.label}>New Username</label>
+            <label style={styles.label}>Username</label>
             <input onChange={handleChange} name="username" value={inputs.username} type="text" style={styles.input}/>
 
-            <label style={styles.label}>New Password</label>
+            <label style={styles.label}>Password</label>
             <input onChange={handleChange} name="password" value={inputs.password} type="password" style={styles.input}/>
 
-            <label style={styles.radioContainerLabel}>Signing up as a...</label>
+            <label style={styles.radioContainerLabel}>Sign up as...</label>
             <div style={styles.radioContainer}>
                 <label style={styles.radioLabel}>
                     <input onChange={handleChange} name="role" value="parent" type="radio" checked={inputs.role === "parent"}/>

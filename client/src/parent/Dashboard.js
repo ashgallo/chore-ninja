@@ -15,7 +15,7 @@ function Dashboard({ user, addKid }) {
     <CheckUser user={user} userRole="parent">
       <Navbar />
       <div style={styles.headerContainer}>
-        <h1>Welcome, {user.username}</h1>
+        <h1 style={styles.username}>Welcome, {user.username}</h1>
         <FormContainer inputs={{
           "kid": ""
         }}>
@@ -26,7 +26,7 @@ function Dashboard({ user, addKid }) {
       </div>
 
       <div style={styles.container}>
-        <h3 style={styles.child}>Child 1</h3>
+        <h3 style={styles.child}>Sally</h3>
 
         <div style={styles.row1}>
           <h4 style={styles.headers}>Chores to approve:</h4>
@@ -58,6 +58,11 @@ const styles = {
     alignItems: "center",
     margin: "0 20px"
   },
+  username: {
+    fontFamily: 'Acme, sans-serif',
+    fontSize: '40px',
+    color: '#373738',
+  },
   container: {
     position: 'relative',
     display: 'grid',
@@ -65,27 +70,32 @@ const styles = {
     gridGap: '10px',
     border: 'solid 3px black',
     padding: '10px',
+    margin: '10px'
   },
   headers: {
-    margin: 5
+    margin: 5,
+    fontFamily: 'Acme, sans-serif',
+    fontSize: '20px',
+    color: '#373738',
   },
   child: {
     gridColumnStart: 1,
-    gridColumnEnd: 1,
+    gridColumnEnd: 2,
     gridRowStart1: 1,
-    margin: 0
+    gridRowEnd: 2,
+    margin: 0,
+    fontFamily: 'Acme, sans-serif',
+    fontSize: '25px',
   },
   row1: {
     gridColumnStart: 1,
     gridColumnEnd: 3,
     gridRowStart: 2,
-    border: 'solid 2px green'
   },
   row2: {
     gridColumnStart: 1,
     gridColumnEnd: 3,
     gridRowStart: 3,
-    border: 'solid 2px orange'
   },
   column2: {
     gridColumnStart: 3,
@@ -94,7 +104,7 @@ const styles = {
     gridRowEnd: 4,
     display: 'flex',
     justifyContent: 'center',
-    border: 'solid 2px blue',
+    border: 'solid 2px #373738',
   },
   img: {
     height: 'auto',
@@ -108,7 +118,7 @@ const styles = {
     gridColumnEnd: 5,
     gridRowStart: 2,
     gridRowEnd: 4,
-    border: 'solid 2px red'
+    border: 'solid 2px #373738'
   }
 }
 

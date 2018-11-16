@@ -20,10 +20,18 @@ const styles = {
     header: {
         fontSize: "2.5em"
     },
+    login: {
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
+    },
     Button: {
         backgroundColor: "#EB3460",
         width: "100px",
-        height: "20px"
+        height: "20px",
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
     },
     Link: {
         color: "#f2f2f2",
@@ -50,7 +58,7 @@ function SignupPage({ signup }) {
                     <SignupForm {...props} handleSubmit={signup}/>
                 )}
             </FormContainer>
-            <h3>Already have an account?</h3>
+            <h3 style={styles.login}>Already have an account?</h3>
             <Button variant="contained" style={styles.Button}>
                 <Link to="/login" style={styles.Link}>Login</Link>
             </Button>

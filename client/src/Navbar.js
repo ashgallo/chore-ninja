@@ -9,7 +9,7 @@ const styles = {
     navContainer: {
         display: "flex",
         justifyContent: "space-between",
-        backgroundColor: "#0072a3"
+        backgroundColor: "#5ECFA1"
     },
     nav: {
         display: "flex",
@@ -20,12 +20,18 @@ const styles = {
     },
     Link: {
         textDecoration: "none",
-        color: "#f2f2f2"
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '25px',
+        color: "#373738",
+        marginLeft: 20
     },
     Button: {
-        backgroundColor: "#5ECFA1",
+        backgroundColor: "#fff8ac",
+        color: '#373738',
         justifySelf: "flexEnd",
-        margin: "5px 10px"
+        margin: "5px 10px",
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '25px'
     }
 }
 

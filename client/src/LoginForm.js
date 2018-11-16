@@ -7,10 +7,12 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         width: "75%",
-        marginBottom: "50px"
+        marginBottom: "50px",
     },
     label: {
-        color: "#606060"
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
     },
     input: {
         border: "none",
@@ -23,8 +25,10 @@ const styles = {
         outlineColor: "#0F52BA"
     },
     loginButton: {
-        backgroundColor: "#0072a3",
-        color: "#f2f2f2",
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
+        backgroundColor: '#fff8ac',
         width: "100px",
         height: "20px",
         alignSelf: "center"
