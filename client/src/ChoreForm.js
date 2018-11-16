@@ -28,14 +28,21 @@ class ChoreForm extends Component {
   };
 
   clearInputs = () => {
-    this.setState(prevState => {
-      let newState = {}
-      for (let key in prevState) {
-        newState[key] = ""
-      }
-      return newState;
+    this.setState({
+      name: "",
+      description: "",
+      points: "",
+      assignedTo: ""
     });
   }
+
+  clearInputs = () => {
+    this.setState({
+        name: "",
+        points: "",
+        restrictedTo: ""
+    })
+};
 
   render() {
     const selectCategory = ["kitchen", "pets", "bathroom", "bedroom", "livingroom", "yard", "laundry", "other"]
