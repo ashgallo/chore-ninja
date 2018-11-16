@@ -24,7 +24,7 @@ class ChoreForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const reqBody = { ...this.state, image: this.uploader.current.files[0] }
-    this.props.addChore(reqBody)
+    this.props.addChore(reqBody, this.clearInputs)
   };
 
   clearInputs = () => {

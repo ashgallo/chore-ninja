@@ -22,18 +22,33 @@ export default class RewardProvider extends Component {
     }
   }
 
+  blobify = (url) => {
+    const token = localStorage.getItem("token");
+    const options = {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+    return fetch(url, options)
+      .then(res => res.blob()).then(blob => URL.createObjectURL(blob))
+  }
   getRewards = () => {
     return rewardAxios.get(rewardUrl)
-      .then(response => {
-        this.setState({ rewards: response.data });
+      .then(async response => {
+        const rewards = await Promise.all(response.data.map(reward => this.blobify(`/api/rewards/images/${reward.image.filename}`)
+          .then(src => ({ ...reward, image: { ...reward.image, src } }))))
+        this.setState({ rewards });
         return response;
       })
   };
   addReward = (newReward, cb) => {
     return rewardAxios.post(rewardUrl, newReward)
-      .then(response => {
+      .then(async response => {
+        const reward = response.data;
+        const src = await this.blobify(`/api/rewards/images/${reward.image.filename}`);
+        reward.image.src = src;
         this.setState(prevState => {
-          return { rewards: [...prevState.rewards, response.data] }
+          return { rewards: [...prevState.rewards, reward] }
         });
         return response;
       }, cb)
