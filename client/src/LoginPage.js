@@ -18,12 +18,17 @@ const styles = {
         backgroundColor: "#5ECFA1"
     },
     header: {
-        fontSize: "2.5em"
+        fontSize: "2.5em",
+        fontFamily: 'Acme, sans-serif',
+        color: '#373738',
     },
     Button: {
         backgroundColor: "#EB3460",
-        width: "100px",
-        height: "20px"
+        width: "120px",
+        height: "20px",
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
     },
     Link: {
         color: "#f2f2f2",
@@ -34,6 +39,11 @@ const styles = {
         bottom: "0",
         left: "0",
         marginLeft: "10px"
+    },
+    account: {
+        fontFamily: 'Acme, sans-serif',
+        fontSize: '20px',
+        color: '#373738',
     }
 }
 
@@ -49,7 +59,7 @@ function LoginPage({ login }) {
                     <LoginForm {...props} handleSubmit={login}/>
                 )}
             </FormContainer>
-            <h3>Don't have an account?</h3>
+            <h3 style={styles.account}>Don't have an account?</h3>
             <Button variant="contained" style={styles.Button}>
                 <Link to="/signup" style={styles.Link}>Sign Up</Link>
             </Button>

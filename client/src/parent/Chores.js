@@ -24,8 +24,10 @@ function Chores({ user }) {
 
 const styles = {
   title: {
-    color: '#0072a3',
-    margin: '10px 0 0 10px',
+    color: '#EB3460',
+    margin: '40px 0 0 45px',
+    fontFamily: 'Acme, sans-serif',
+    fontSize: '60px'
   },
   divider: {
     display: 'block',
