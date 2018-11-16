@@ -1,7 +1,8 @@
 import React, { Component, createRef } from 'react';
 import { withChoreContext } from './context/ChoreContext';
 import { withUserContext } from './context/UserContext';
-import Button from '@material-ui/core/Button';
+import { IconButton } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/AddCircle';
 
 class ChoreForm extends Component {
   constructor() {
@@ -40,7 +41,7 @@ class ChoreForm extends Component {
     const selectCategory = ["kitchen", "pets", "bathroom", "bedroom", "livingroom", "yard", "laundry", "other"]
 
     const categoryOptions = selectCategory.map((category, i) => (
-      <option value={category} key={i}>{category}</option>
+      <option value={category} key={i} style={styles.dropdown}>{category}</option>
     ))
 
     const assigneeRadios = this.props.user.kids.map(kid => (
@@ -58,18 +59,18 @@ class ChoreForm extends Component {
           </select>
 
           <label style={styles.label}>Chore:</label>
-          <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
+          <input name="name" type="text" value={this.state.name} onChange={this.handleChange} style={styles.input} />
 
           <label style={styles.label}>Description:</label>
-          <input name="description" type="text" value={this.state.description} onChange={this.handleChange} />
+          <input name="description" type="text" value={this.state.description} onChange={this.handleChange} style={styles.input} />
         </div>
 
         <div style={styles.row2}>
           <label style={styles.label}>Points:</label>
-          <input name="points" type="number" value={this.state.points} onChange={this.handleChange} />
+          <input name="points" type="number" value={this.state.points} onChange={this.handleChange} style={styles.input} />
 
           <label style={styles.label}>Image:</label>
-          <input ref={this.uploader} name="image" type="file" />
+          <input ref={this.uploader} name="image" type="file" style={styles.input} />
         </div>
 
         <div style={styles.row3}>
@@ -77,8 +78,8 @@ class ChoreForm extends Component {
           {assigneeRadios}
         </div>
 
-        <div style={styles.column2}>
-          <Button type="submit" variant='contained' style={styles.button}>Add</Button>
+        <div style={styles.column4}>
+          <IconButton type="submit" variant='contained'><AddIcon style={styles.button}/></IconButton>
         </div>
       </form>
     )
@@ -89,12 +90,21 @@ const styles = {
   container: {
     position: 'relative',
     display: 'grid',
-    gridTemplateColumns: '.5fr 1fr 1fr .5fr',
+    gridTemplateColumns: '.5fr .3fr .3fr .5fr',
     gridGap: '10px',
     margin: '10px'
   },
   label: {
     margin: '10px'
+  },
+  dropdown: {
+    margin: 0,
+    height: '20px',
+    width: '50px'
+  },
+  input: {
+    height: '20px',
+    width: '100px'
   },
   row1: {
     display: 'flex',
@@ -120,18 +130,21 @@ const styles = {
     gridRowStart: 3,
     gridRowEnd: 4,
   },
-  column2: {
+  column4: {
     gridColumnStart: 4,
     gridColumnEnd: 5,
     gridRowStart: 1,
-    gridRowEnd: 3,
+    gridRowEnd: 4,
+    display: 'flex',
+    
   },
   button: {
-    backgroundColor: '#EB3460',
-    color: '#f2f2f2',
-    width: '100px',
-    height: '20px',
-    margin: '10px'
+    color: '#EB3460',
+    baclgroundColor: '#f2f2f2',
+    width: '70px',
+    height: '70px',
+    borderRadius: '50px',
+    margin: 0
   }
 }
 

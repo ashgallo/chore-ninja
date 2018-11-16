@@ -4,8 +4,8 @@ import axios from "axios";
 const choreAxios = axios.create({
     transformRequest: [data => {
         const formData = new FormData();
-        for(let key in data){
-            if(data.hasOwnProperty(key)){
+        for (let key in data) {
+            if (data.hasOwnProperty(key)) {
                 formData.append(key, data[key])
             }
         };
@@ -24,7 +24,7 @@ choreAxios.interceptors.request.use((config) => {
 const ChoreData = createContext();
 
 export default class ChoreContext extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             loading: true,
@@ -33,28 +33,47 @@ export default class ChoreContext extends Component {
         }
     };
 
+    blobify = (url) => {
+        const token = localStorage.getItem('token');
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+        return fetch(url, options)
+            .then(res => res.blob()).then(blob => URL.createObjectURL(blob))
+    }
     getChores = () => {
         return choreAxios.get(choreUrl)
-            .then(response => {
-                this.setState({ chores: response.data });
+            .then(async response => {
+                const chores = await Promise.all(response.data.map(chore => this.blobify(`/api/chores/images/${chore.image.filename}`)
+                    .then(src => ({ ...chore, image: { ...chore.image, src } }))))
+
+                this.setState({ chores });
                 return response;
             })
     };
     addChore = (newChore, cb) => {
         return choreAxios.post(choreUrl, newChore)
-            .then(response => {
+            .then(async response => {
+                const chore = response.data;
+                const src = await this.blobify(`/api/chores/images/${chore.image.filename}`);
+                chore.image.src = src;
                 this.setState(prevState => {
-                    return { chores: [...prevState.chores, response.data] }
+                    return { chores: [...prevState.chores, chore] }
                 });
                 return response;
             }, cb);
     };
     editChore = (choreId, editedChore) => {
         return choreAxios.put(`${choreUrl}/${choreId}`, editedChore)
-            .then(response => {
+            .then( async response => {
+                const updatedChore = response.data;
+                const src = await this.blobify(`/api/chores/images/${updatedChore.image.filename}`);
+                updatedChore.image.src = src;
                 this.setState(prevState => {
                     const updatedChores = prevState.chores.map(chore => {
-                        return chore._id === choreId ? response.data : chore
+                        return chore._id === choreId ? updatedChore : chore
                     });
                     return { chores: updatedChores }
                 });
