@@ -69,10 +69,9 @@ class UserContext extends Component {
                 .then((role) => this.props.history.push(`/${role}/dashboard`))
         }
     };
-    sendCredentials = credentials => {
-        axios.post("/auth/login", credentials)
-            .then(response => response.data);
-    };
+    sendCredentials = credentials => axios.post("/auth/login", credentials)
+            .then(response => response.data)
+
     login = (credentials) => {
         return async e => {
             e.preventDefault();
