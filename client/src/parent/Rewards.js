@@ -17,7 +17,7 @@ function Rewards({ user }) {
             <RewardForm />
 
             <img src={ninjaHome} alt="" style={styles.logo}/>
-            <div style={styles.divider}><hr /></div>
+            <div><hr style={styles.divider} /></div>
         </CheckUser>
     )
 }
