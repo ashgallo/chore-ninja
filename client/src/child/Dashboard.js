@@ -10,8 +10,7 @@ const Dashboard = ({ user }) => (
   <CheckUser user={user} userRole="child">
     <Navbar />
     <h1>Welcome, {user.username}</h1>
-    <button style={styles.addButton}>Add Parent</button>
-
+    
     <div style={styles.container}>
 
       <div style={styles.row1}>
