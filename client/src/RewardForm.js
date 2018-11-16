@@ -58,7 +58,7 @@ class RewardForm extends Component {
                     <label style={styles.label}>Restrict To:</label>
                     {restrictedToRadios}
                 </div>
-                <Button variant="fab" style={styles.button} aria-label="Add">
+                <Button  type="submit" variant="fab" style={styles.button} aria-label="Add">
                     <AddIcon fontSize="large" />
                 </Button>
             </form>
