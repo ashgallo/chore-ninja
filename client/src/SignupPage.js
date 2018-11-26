@@ -18,7 +18,8 @@ const styles = {
         backgroundColor: "#5ECFA1"
     },
     header: {
-        fontSize: "2.5em"
+        fontSize: "2.5em",
+        fontFamily: 'Acme, sans-serif'
     },
     login: {
         fontFamily: 'Acme, sans-serif',
